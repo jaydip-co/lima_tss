@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<ui:composition
+    template="/WEB-INF/templates/templet.xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="uuid" value="#{editTimeEntry.timeEntryUuid}"/>
+            <f:viewParam name="parentUuid" value="#{editTimeEntry.parrentUuid}"/>
+        </f:metadata>
+
+    </ui:define>
+    <ui:param name="pageHeadline" value="title"/>
+    <ui:define name = "scripts">
+
+    </ui:define>
+    <ui:define name="content">
+        <b:form>
+            <b:alert severity="danger" rendered="${editTimeEntry.isValidationError()}">
+                ${editTimeEntry.errorString}
+            </b:alert>
+            <b:row>
+                <b:column span="4">
+                    <b:selectOneMenu label="Entry Type" value="#{editTimeEntry.entry.reportType}" >
+                        
+                        <f:selectItems value="#{editTimeEntry.reportTypes}" var="r" itemLabel="#{r}"
+                                       itemValue="#{r}"/>
+                    </b:selectOneMenu>
+                </b:column>
+
+            </b:row>
+
+            <b:row>
+                <b:column span="4">
+                    <b:inputTextarea label="Description"
+                                     value="#{editTimeEntry.entry.description}"/>
+                </b:column>
+            </b:row>
+            <b:row>
+
+                <b:column span="4">
+
+                    <b:dateTimePicker id="d1" 
+                                      value="#{editTimeEntry.startTime}"
+                                      format="HH:mm"
+                                      label="Start Time"
+                                      icon="time"
+                                      required="true"
+                                     />
+                </b:column>
+
+            </b:row>
+            <b:row>
+
+                <b:column span="4">
+
+                    <b:dateTimePicker id="d2" show-date="false" label="End Time"
+                                      value="#{editTimeEntry.endTime}"
+                                      format="HH:mm"
+                                      icon="time"
+                                      required="true"/>
+                </b:column>
+                
+
+            </b:row>
+            <b:row>
+                <b:column span="4">
+
+                    <b:datepicker id="date" value="#{editTimeEntry.entryDate}"
+                                  required="true"
+                                
+                                  label="Date"/>
+                </b:column>
+            </b:row>
+            <b:commandButton actionListener="#{editTimeEntry.storeEntry}" value="store" />
+        </b:form>
+    </ui:define>
+</ui:composition>

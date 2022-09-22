@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <head>
+        <title>title</title>
+    </head>
+<body>
+<h3 align="center">
+	New Contract 
+</h3>
+<br/><br/>
+<form>
+<div class="p-2 form-group row">
+      <label class="col-sm-2 col-form-label" for="inlineFormInput">Employee ID:</label>
+	  <div class="col-sm-10">
+      <input type="text" class="form-control mb-2 w-75" id="inlineFormInput" placeholder="Employee ID"/>
+	  </div>
+</div>
+<div class="p-2 form-group row">
+      <label class="col-sm-2 col-form-label" for="inlineFormInput">First Name:</label>
+	  <div class="col-sm-10">
+      <input type="text" class="form-control mb-2 w-75" id="inlineFormInput" placeholder="Jane"/>
+	  </div>
+</div>
+ <div class="p-2 form-group row">
+     <label class="col-sm-2 col-form-label" for="inlineFormInput">Last Name:</label>
+	 <div class="col-sm-10">
+     <input type="text" class="form-control mb-2 w-75" id="inlineFormInput" placeholder="Doe"/>
+	 </div>
+</div>
+ <div class="p-2 form-group row">
+    <label for="email" class="col-sm-2 col-form-label">Email address:</label>
+	<div class="col-sm-10">
+    <input type="email" class="form-control w-75" id="email" aria-describedby="emailHelp" placeholder="Enter email"/>
+    <small id="emailHelp" class="form-text text-muted"> We'll never share your email with anyone else.</small>
+	</div>
+  </div>
+<div class="p-2 form-group row">
+    <label for="role" class="col-sm-2 col-form-label">Role:</label>
+	<div class="col-sm-10">
+    <select class="form-control w-75" id="role" >
+      <option>Employee</option>
+      <option>Supervisor</option>
+      <option>Secretary</option>
+    </select>
+	</div>
+  </div>
+<div class="p-2 form-group row">
+    <label for="gender" class="col-sm-2 col-form-label">Gender:</label>
+	<div class="col-sm-10">
+    <select class="form-control w-75" id="gender">
+      <option>Male</option>
+      <option>Female</option>
+      <option>Diverse</option>
+    </select>
+	</div>
+  </div>
+<div class="p-2 form-group row">
+     <label class="col-sm-2 col-form-label" for="inlineFormInput">Weekly Working Hours:</label>
+	 <div class="col-sm-10">
+     <input type="text" class="form-control mb-2 w-75" id="inlineFormInput" placeholder="12"/>
+	 </div>
+</div>
+<div class="col-md-12 text-center">
+ <button type="button" class="btn btn-secondary" >Back</button>
+ <button type="button" class="btn btn-success" >Submit</button>
+ <h:outputScript name="bootstrap-3.3.7-dist/js/bootstrap.min.js"/>
+</div>
+</form>
+</body>
+</html>

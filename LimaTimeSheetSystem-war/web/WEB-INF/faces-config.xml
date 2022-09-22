@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+-->
+<faces-config version="2.3"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>de</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <!--
+            specifying the resource-bundle in this config file enables
+            code completion in NetBeans xhtml editor,
+            whereas f:loadbundle does not
+            -->
+            <base-name>tss.lcl.message</base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>homepage</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/home.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/login.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>userList</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/user/userList.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Welcome</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/welcome.xtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ContractList</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/contract/contract.xtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>DashBoard</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/dashBoard.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>EditContract</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/contract/edit_contract.xhtml</to-view-id>
+            
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ManageContract</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/manage_contract.xhtml</to-view-id>
+            
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>TimeSheetList</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/timesheets/timesheet_list.xhtml</to-view-id>
+            
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>TimeSheetEntry</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/timesheets/time_sheet_entry_list.xhtml</to-view-id>   
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>NewEntry</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/timesheets/new_entry.xhtml</to-view-id>   
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>Crud</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/user/crud-operation.html</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ContractList</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/contract/contract.xtml</to-view-id>
+        </navigation-case>
+        
+        <!--        <navigation-case>
+            <from-outcome>contactlist</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/user/contactlist.xhtml</to-view-id>
+        </navigation-case>-->
+        
+        
+        <navigation-case>
+            <from-outcome>J</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/j/j.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Download</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/rest/contracts/list/</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>new</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/j/newContract.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+
+</faces-config>

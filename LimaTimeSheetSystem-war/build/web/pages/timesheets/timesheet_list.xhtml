@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+-->
+
+<ui:composition
+    template="/WEB-INF/templates/templet.xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam id="uuid" name="uuid" value="#{timeSheetBean.uuid}"
+                         required="true"
+                         requiredMessage="uuid for contract is required"/>
+            <f:viewParam id="uuid" name="uuid" value="${timeSheetEntryBean.parentUuid}"
+                         required="true"
+                         requiredMessage="uuid for contract is required"/>
+
+        </f:metadata>
+    </ui:define>
+    <ui:param name="title" value="#{timeSheetBean.conract.name}"/>
+    <ui:define name="content">
+        <h:outputLabel value="#{timeSheetBean.conract.name}" class="fa-2x"/>
+        <br/>
+
+        <ui:fragment rendered="#{timeSheetBean.activeSheet}">
+            <b:container>
+                <h:outputLabel value="Current Time Sheet" class="fa-1-5x"/>
+                <br/>
+                <h:outputText value="#{timeSheetEntryBean.timeSheet.startDate}  -  #{timeSheetEntryBean.timeSheet.endDate}"/>
+                <br/>
+                <br/>
+            </b:container>
+            <ui:include src="current_time_sheet_list.xhtml"/>
+        </ui:fragment>
+
+        <b:container>
+            <br/>
+            <h:outputLabel value="All Time Sheet" class="fa-1-5x"/>
+            <br/>
+            <b:dataTable id="timesheets" striped=" true" 
+                         var="c"
+
+                         searching="false" 
+                         value="#{timeSheetBean.allTimeSheet}">
+                <b:dataTableColumn label="Period" orderable="false">
+                    <h:outputText value="#{c.startDate} - #{c.endDate}"/>
+                </b:dataTableColumn>
+                <b:dataTableColumn label="Status" orderable="false">
+                    <h:outputText value="#{c.status}"/>
+                </b:dataTableColumn>
+                 <b:dataTableColumn label="hours" orderable="false">
+                    <h:outputText value="#{c.hoursDue}"/>
+                </b:dataTableColumn>
+                 <b:dataTableColumn label="" orderable="false">
+                     <h:link outcome="TimeSheetEntry" value="view">
+                        <f:param name="uuid" value="${c.uuid}"/>
+                        <f:param name="parentUuid" value="#{timeSheetBean.uuid}"/>
+                    </h:link>
+                </b:dataTableColumn>
+
+            </b:dataTable>
+
+        </b:container>
+    </ui:define>
+</ui:composition>

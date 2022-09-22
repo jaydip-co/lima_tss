@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello from TSS
+        ${contractBean.userName}
+        ${contractBean.usetRole}
+        <h:link outcome="DashBoard" value="DashBoard"/><br/>
+        <h:link outcome="Crud" value="crud"/><br/>
+        <h:link outcome="ContractList" value="contact"/><br/>
+        <h:link outcome="J" value="j"/><br/>
+         <h:link outcome="ContractList" value="Contract"/><br/>
+         <h:link outcome="login" value="Login"/>
+        <h:form>
+        <h:commandLink immediate="true"
+                action="homepage"
+                actionListener="#{contractBean.logout}"
+                value="logout"/>
+        </h:form>
+    </h:body>
+</html>
+

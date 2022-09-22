@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+    <b:form>
+    
+        <h1> Contract List</h1>
+         ${contractBean.userName}
+      
+        
+        <b:row>
+            <b:column offset="1" span="10">
+                <b:dataTable id="table" striped="true" var="contact" value="${contractBean.allContract}">
+                    <b:dataTableColumn label="${msg.contactNameLabel}">
+                        <text>${contact.name}</text>
+                        
+                    </b:dataTableColumn>
+                    
+                </b:dataTable>
+            </b:column>
+        </b:row>
+
+        <b:commandButton
+            actionListener="#{contractBean.setContract}"
+                                value="Add"
+                                update="@(body>*)"
+                                />
+        </b:form>
+    </h:body>
+</ui:composition>
