@@ -1,12 +1,9 @@
-/TimeSheetSystem-ejb/dist/
-/TimeSheetSystem-ejb/build/
-/TimeSheetSystem-ejb/nbproject/
+
 /build/
 /dist/
-/nbproject/
-/TimeSheetSystem-war/dist/
-/TimeSheetSystem-war/build/
-/TimeSheetSystem-war/nbproject/
+
+
 /LimaTimeSheetSystem-ejb/build/
 /LimaTimeSheetSystem-ejb/dist/
 /LimaTimeSheetSystem-war/dist/
+/LimaTimeSheetSystem-war/build/
