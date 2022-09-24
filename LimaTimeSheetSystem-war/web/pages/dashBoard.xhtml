@@ -44,11 +44,11 @@
                                 #{c.endDate}
                             </b:dataTableColumn>
                             <b:dataTableColumn label=""  orderable="false">
-                                <ui:fragment rendered="#{c.inStarted()}">
+                                
                                  <h:link outcome="TimeSheetList" value="Entries">
                                     <f:param name="uuid" value="${c.uuid}"/>
                                 </h:link>
-                               </ui:fragment>
+                              
                             </b:dataTableColumn>
 
                         </b:dataTable>
@@ -96,8 +96,7 @@
                             <b:dataTableColumn label="Actions" orderable="false">
                                 <b:row class="fa-1x">
                                     <b:column>
-
-                                        <h:link outcome="EditContract">
+                                        <h:link outcome="EditContract" rendered="${c.inPrepared()}">
                                             <h:outputText value="Edit" styleClass="fa-1x" />
                                             <f:param name="uuid" value="#{c.uuid}"/>
                                         </h:link>
@@ -105,6 +104,12 @@
                                     <b:column>
                                         <h:link outcome="ManageContract">
                                             <h:outputText value="  Manage" styleClass="fa-1x" />
+                                            <f:param name="uuid" value="#{c.uuid}"/>
+                                        </h:link>
+                                    </b:column>
+                                    <b:column>
+                                        <h:link outcome="TimeSheetList" rendered="${!c.inPrepared()}">
+                                            <h:outputText value="  Sheets" styleClass="fa-1x" />
                                             <f:param name="uuid" value="#{c.uuid}"/>
                                         </h:link>
                                     </b:column>

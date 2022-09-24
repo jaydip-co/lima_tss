@@ -14,7 +14,7 @@ is divided into following sections:
   - cleanup
 
 -->
-<project xmlns:ear2="http://www.netbeans.org/ns/j2ee-earproject/2" basedir=".." default="default" name="TimeSheetSystem-impl">
+<project xmlns:ear2="http://www.netbeans.org/ns/j2ee-earproject/2" basedir=".." default="default" name="LimaTimeSheetSystem-impl">
     <import file="ant-deploy.xml"/>
     <fail message="Please build using Ant 1.7.1 or higher.">
         <condition>
@@ -432,17 +432,17 @@ exists or setup the property manually. For example like this:
         <ear2:run-appclient subprojectname="${app.client}"/>
     </target>
     <target if="j2ee.appclient.mainclass.args" name="-as-retrieve-option-workaround" unless="j2ee.clientName">
-        <property name="client.jar" value="${dist.dir}/TimeSheetSystemClient.jar"/>
+        <property name="client.jar" value="${dist.dir}/LimaTimeSheetSystemClient.jar"/>
         <sleep seconds="3"/>
-        <copy failonerror="false" file="${wa.copy.client.jar.from}/TimeSheetSystem/TimeSheetSystemClient.jar" todir="${dist.dir}"/>
+        <copy failonerror="false" file="${wa.copy.client.jar.from}/LimaTimeSheetSystem/LimaTimeSheetSystemClient.jar" todir="${dist.dir}"/>
         <copy failonerror="false" flatten="true" todir="${dist.dir}/">
-            <fileset dir="${wa.copy.client.jar.from}/TimeSheetSystem" includes="**/TimeSheetSystemClient.jar"/>
+            <fileset dir="${wa.copy.client.jar.from}/LimaTimeSheetSystem" includes="**/LimaTimeSheetSystemClient.jar"/>
         </copy>
-        <copy flatten="true" todir="${dist.dir}/TimeSheetSystemClient">
-            <fileset dir="${wa.copy.client.jar.from}/TimeSheetSystem" includes="**/*.*ar"/>
+        <copy flatten="true" todir="${dist.dir}/LimaTimeSheetSystemClient">
+            <fileset dir="${wa.copy.client.jar.from}/LimaTimeSheetSystem" includes="**/*.*ar"/>
         </copy>
-        <copy failonerror="false" flatten="false" todir="${dist.dir}/TimeSheetSystemClient">
-            <fileset dir="${dist.dir}/gfdeploy/TimeSheetSystem" includes="**/*.jar"/>
+        <copy failonerror="false" flatten="false" todir="${dist.dir}/LimaTimeSheetSystemClient">
+            <fileset dir="${dist.dir}/gfdeploy/LimaTimeSheetSystem" includes="**/*.jar"/>
         </copy>
     </target>
     <target depends="init" name="-init-run-macros">

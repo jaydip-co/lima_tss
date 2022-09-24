@@ -32,7 +32,7 @@ and open the template in the editor.
             <b:row>
                 <b:column span="4">
                     <b:selectOneMenu label="Entry Type" value="#{editTimeEntry.entry.reportType}" >
-                        
+
                         <f:selectItems value="#{editTimeEntry.reportTypes}" var="r" itemLabel="#{r}"
                                        itemValue="#{r}"/>
                     </b:selectOneMenu>
@@ -56,7 +56,7 @@ and open the template in the editor.
                                       label="Start Time"
                                       icon="time"
                                       required="true"
-                                     />
+                                      />
                 </b:column>
 
             </b:row>
@@ -70,7 +70,7 @@ and open the template in the editor.
                                       icon="time"
                                       required="true"/>
                 </b:column>
-                
+
 
             </b:row>
             <b:row>
@@ -78,11 +78,18 @@ and open the template in the editor.
 
                     <b:datepicker id="date" value="#{editTimeEntry.entryDate}"
                                   required="true"
-                                
+
                                   label="Date"/>
                 </b:column>
             </b:row>
-            <b:commandButton actionListener="#{editTimeEntry.storeEntry}" value="store" />
+           
+            
+          
+            
+            <b:commandButton actionListener="#{editTimeEntry.storeEntry}"
+                             value="store"  >
+                        
+                            </b:commandButton>
         </b:form>
     </ui:define>
 </ui:composition>

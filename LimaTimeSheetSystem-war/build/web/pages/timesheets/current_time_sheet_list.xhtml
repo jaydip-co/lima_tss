@@ -13,7 +13,7 @@ and open the template in the editor.
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <b:container >
-        
+
         <b:dataTable id="currentTimeSheet" striped="true" 
                      var="c"
                      searching="false" 
@@ -21,11 +21,11 @@ and open the template in the editor.
             <b:dataTableColumn label="No." orderable="false">
                 <h:outputText value="#{timeSheetEntryBean.allTimeShhetEntry.indexOf(c) + 1}"/>
             </b:dataTableColumn>
-            
+
             <b:dataTableColumn label="Entry Date">
                 <h:outputText value="#{c.entryDate}"/>
             </b:dataTableColumn>
-             <b:dataTableColumn label="Report Type" orderable="false">
+            <b:dataTableColumn label="Report Type" orderable="false">
                 <h:outputText value="#{c.reportType}"/>
             </b:dataTableColumn>
             <b:dataTableColumn label="Start Time" orderable="false">
@@ -37,30 +37,40 @@ and open the template in the editor.
             <b:dataTableColumn label="Hours" orderable="false">
                 <h:outputText value="#{c.hours}"/>
             </b:dataTableColumn>
-            <b:dataTableColumn label="" orderable="false">
-                
-                <h:link outcome="NewEntry">
-                    <h:outputText value="Edit"/>
-                    
-                    <f:param name="uuid" value="#{c.uuid}"/>
-                <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
-                </h:link>
+
+            <b:dataTableColumn label=""  orderable="false">
+                <ui:fragment rendered="${timeSheetEntryBean.timeSheet.inProgress}">
+                    <h:link outcome="NewEntry">
+                        <h:outputText value="Edit"/>
+
+                        <f:param name="uuid" value="#{c.uuid}"/>
+                        <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
+                    </h:link>
+                </ui:fragment> 
+                <ui:fragment rendered="${!timeSheetEntryBean.timeSheet.inProgress}">
+
+                    <h:outputText value="   "/>
+
+
+                </ui:fragment> 
             </b:dataTableColumn>
 
+
         </b:dataTable>
-        
+        <ui:fragment rendered="${timeSheetEntryBean.timeSheet.inProgress
+                                 &amp;&amp; timeSheetEntryBean.employee}">
             <b:button
                 offset="9"
-                 span="3" look="info"
-                 icon="plus-sign"   
+                span="3" look="info"
+                icon="plus-sign"   
                 value="Add New Entry"
                 outcome="NewEntry"
                 >
                 <f:param name="uuid" value="new"/>
                 <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
             </b:button>
-       
 
+        </ui:fragment>
     </b:container>
 
 </ui:composition>

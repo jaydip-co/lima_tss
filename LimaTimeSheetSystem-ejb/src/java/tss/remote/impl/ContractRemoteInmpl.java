@@ -5,13 +5,9 @@
  */
 package tss.remote.impl;
 
-import com.sun.xml.registry.uddi.bindings_v2_2.Contact;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Period;
-import java.time.temporal.ChronoField;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +39,7 @@ import tss.entities.TimeSheetEntity;
 import tss.entities.TimeSheetEntryEntity;
 import tss.entities.UserRoleEntity;
 import tss.enums.ContractStatus;
-import tss.enums.TimeSheetFrequency;
+import tss.enums.TimeSheetStatus;
 import tss.logic.CalculationLogic;
 import tss.logic.TsTimePeriod;
 import tss.remote.ContractRemote;
@@ -354,7 +350,9 @@ public class ContractRemoteInmpl implements ContractRemote {
     public void terminateContract(String contractUuid) {
         ContractEntity contract = ca.getContractEntityFromUUID(contractUuid);
         contract.setStatus(ContractStatus.TERMINATED);
+        tsa.deleteSheeetWith(contract, TimeSheetStatus.IN_PROGRESS);
     }
+    
 
     @Override
     public List<Contract> getAllContract() {
@@ -367,6 +365,14 @@ public class ContractRemoteInmpl implements ContractRemote {
                 .stream().map(e -> createDTO(e.getContract()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Contract getContractWithTimeSheet(String timeSheetUuid) {
+        TimeSheetEntity time = tsa.getSheetEntityFor(timeSheetUuid);
+        return Convertor.toContract(time.getParent(), currentUser);
+    }
+    
+    
 
     @Override
     public List<Contract> getContractsWithRole(String[] roles) {
@@ -397,6 +403,7 @@ public class ContractRemoteInmpl implements ContractRemote {
                 .map(e -> Convertor.toTimeSheet(e))
                 .sorted((i1, i2) -> i2.getStartDate().isAfter(i1.getStartDate()) ? -1 : 1)
                 .collect(Collectors.toList());
+        
 //                tsa.getTimeShhetEntryWith(ce).stream()
 //                .map(e -> Convertor.toTimeSheet(e))
 //                .collect(Collectors.toSet());
@@ -428,6 +435,13 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    public TimeSheet getTimeSheetWith(String timeSheetUuid) {
+        return Convertor.toTimeSheet(tsa.getSheetEntityFor(timeSheetUuid));
+    }
+    
+    
+
+    @Override
     public String storeTimeEntry(TimeSheetEntry tse, String parentUuid) {
         TimeSheetEntity ts = tsa.getSheetEntityFor(parentUuid);
         TimeSheetEntryEntity tsee;
@@ -450,6 +464,54 @@ public class ContractRemoteInmpl implements ContractRemote {
 
         return tsee.getUuid();
     }
+
+    @Override
+    public boolean signSheet(String sheetUuid) {
+        TimeSheetEntity sheet = tsa.getSheetEntityFor(sheetUuid);
+        Contract c = Convertor.toContract(sheet.getParent(), currentUser);
+        if(c.getCurrentUserRole().equals(UserRoles.EMPLOYEE)){
+        sheet.setStatus(TimeSheetStatus.SIGNED_BY_EMPLOYEE);
+        sheet.setSignedByEmployee(LocalDate.now());
+        }
+        else if(c.getCurrentUserRole().equals(UserRoles.SUPERVISOR)){
+        sheet.setStatus(TimeSheetStatus.SIGNED_BY_SUPERVISOR);
+        sheet.setSignedBySupervisor(LocalDate.now());
+        
+        }
+        
+        return true;
+    }
+
+    @Override
+    public boolean revoveSignature(String sheetUuid) {
+        TimeSheetEntity sheetEntity = tsa.getSheetEntityFor(sheetUuid);
+        sheetEntity.setSignedByEmployee(null);
+        sheetEntity.setStatus(TimeSheetStatus.IN_PROGRESS);
+        return true;
+    }
+
+    @Override
+    public boolean archieveSheet(String sheetUuid) {
+        TimeSheetEntity sheetEntity = tsa.getSheetEntityFor(sheetUuid);
+        sheetEntity.setStatus(TimeSheetStatus.ARCHIVED);
+        checkForArchieveContract(sheetEntity.getParent().getUuid());
+        return true;
+    }
+    
+    private void checkForArchieveContract(String contractUuid){
+        ContractEntity contractEntity = ca.getContractEntityFromUUID(contractUuid);
+        Set<TimeSheetEntity> sheets = contractEntity.getTimeSheets();
+        if (sheets.stream().anyMatch((e) -> (e.getStatus() != TimeSheetStatus.ARCHIVED))) {
+            return ;
+        }
+        contractEntity.setStatus(ContractStatus.ARCHIVED);
+    }
+    
+    
+    
+    
+    
+    
 
     @Override
     public List<TimeSheetEntry> getAllEntryFor(String timeSheetUuid) {

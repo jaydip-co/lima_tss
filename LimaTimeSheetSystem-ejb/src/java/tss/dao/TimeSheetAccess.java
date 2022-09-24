@@ -14,6 +14,7 @@ import tss.entities.ContractEntity;
 import tss.entities.TimeSheetEntity;
 import tss.entities.TimeSheetEntryEntity;
 import tss.enums.ReportType;
+import tss.enums.TimeSheetStatus;
 
 /**
  *
@@ -78,6 +79,19 @@ public class TimeSheetAccess extends BaseAccess {
         return em.createNamedQuery("getTimeEntryWithUuid", TimeSheetEntryEntity.class)
                 .setParameter("uuid", uuid)
                 .getSingleResult();
+    }
+    
+    public boolean deleteSheeetWith(ContractEntity c,TimeSheetStatus status){
+        List<TimeSheetEntity> entries = em.createNamedQuery("getTimeSheetWithStatus", TimeSheetEntity.class)
+                .setParameter("status", status)
+                .setParameter("contract", c)
+                .getResultList();
+        for(TimeSheetEntity e : entries){
+            e.getParent().getTimeSheets().remove(e);
+            e.setParent(null);
+            em.remove(e);
+        }
+        return true;
     }
     
 }

@@ -33,7 +33,8 @@ import tss.enums.ReportType;
             name ="getTimeEntryWithUuid",
             query = "SELECT c FROM time_sheet_entry c "
             + "WHERE c.uuid = :uuid"
-    )
+    ),
+   
 })
 @Entity(name = "time_sheet_entry")
 public class TimeSheetEntryEntity extends BaseEntity implements Serializable {

@@ -75,7 +75,7 @@ public class ContractEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Set<ContractUserRole> contractUserRoles;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     private Set<TimeSheetEntity> timeSheets;
 
     public ContractEntity() {

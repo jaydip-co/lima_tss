@@ -6,9 +6,9 @@
 package tss.dto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import tss.UserRoles;
 import tss.enums.ContractStatus;
 import tss.enums.TimeSheetFrequency;
 
@@ -226,7 +226,19 @@ public class Contract extends BaseDTO{
     }
     
     
+    public boolean isManager(){
+        List<String> roles = List.of(UserRoles.SECRETARY, UserRoles.SUPERVISOR, UserRoles.ASSISTANT);
+        return roleContain(roles);
+    }
+    
+    private boolean roleContain(List<String> roles){
+       return roles.contains(currentUserRole);
+    }
+    
     public boolean inStarted(){
         return status == ContractStatus.STARTED;
+    }
+    public boolean inPrepared(){
+        return status == ContractStatus.PREPARED;
     }
 }

@@ -27,6 +27,8 @@ public class TimeSheet extends BaseDTO{
     private LocalDate signedByEmployee;
     
     private LocalDate signedBySupervisor;
+    
+    private double workHours;
 
     public TimeSheet(TimeSheetStatus status, 
             LocalDate startDate,
@@ -34,6 +36,7 @@ public class TimeSheet extends BaseDTO{
             double hoursDue,
             LocalDate signedByEmployee, 
             LocalDate signedBySupervisor,
+            double workHours,
             String uuid, int jpaVersion) {
         super(uuid, jpaVersion);
         this.status = status;
@@ -42,7 +45,18 @@ public class TimeSheet extends BaseDTO{
         this.hoursDue = hoursDue;
         this.signedByEmployee = signedByEmployee;
         this.signedBySupervisor = signedBySupervisor;
+        this.workHours = workHours;
     }
+
+    public double getWorkHours() {
+        return workHours;
+    }
+
+    public void setWorkHours(double workHours) {
+        this.workHours = workHours;
+    }
+    
+    
 
     public TimeSheetStatus getStatus() {
         return status;
@@ -91,9 +105,11 @@ public class TimeSheet extends BaseDTO{
     public void setSignedBySupervisor(LocalDate signedBySupervisor) {
         this.signedBySupervisor = signedBySupervisor;
     }
-
     
-    
-    
-    
+    public boolean isInProgress() {
+        return this.status == TimeSheetStatus.IN_PROGRESS;
+    }
+    public boolean isSignedByEmployee() {
+        return this.status == TimeSheetStatus.SIGNED_BY_EMPLOYEE;
+    }
 }

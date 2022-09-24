@@ -102,6 +102,7 @@ public class Convertor {
                 te.getHoursDue(),
                 te.getSignedByEmployee(),
                 te.getSignedBySupervisor(),
+                te.getWorkHours(),
                 te.getUuid(),
                 te.getJpaVersion());
         return ts;

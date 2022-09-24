@@ -58,6 +58,8 @@ public interface ContractRemote {
     public void deleteContract(String contractUUid);
 
     public void terminateContract(String contractUuid);
+    
+    public Contract getContractWithTimeSheet(String timeSheetUuid);
 
     //////////// user Data /////////
     public Person getUserDataByUserName(String username, List<String> roles, boolean isStaff);
@@ -68,6 +70,8 @@ public interface ContractRemote {
     public List<TimeSheet> getAlltTimeSheetFor(String contractUuid);
 
     public TimeSheet getCurrentTimeSheet(String contractUuid);
+    
+    public TimeSheet getTimeSheetWith(String timeSheetUuid);
 
     public TimeSheetEntry getTimeSheetEntry(String uuid);
 
@@ -76,5 +80,11 @@ public interface ContractRemote {
     public List<Person> getAllUser(boolean istaff);
     
     public List<Person> getAllUser();
+    
+    public boolean signSheet(String sheetUuid);
+    
+    public boolean revoveSignature(String signature);
+    
+    public boolean archieveSheet(String sheetUuid);
 
 }

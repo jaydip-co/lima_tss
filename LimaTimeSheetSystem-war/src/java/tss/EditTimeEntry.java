@@ -7,14 +7,15 @@ package tss;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.temporal.TemporalField;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import tss.dto.Contract;
 import tss.dto.TimeSheetEntry;
 import tss.enums.ReportType;
 import tss.remote.ContractRemote;
@@ -46,6 +47,8 @@ public class EditTimeEntry implements Serializable {
     private Date entryDate;
     
     private String errorString = "";
+    
+    private Contract contract;
 
     public ReportType[] getReportTypes() {
         return ReportType.values();
@@ -114,6 +117,19 @@ public class EditTimeEntry implements Serializable {
     public boolean isValidationError(){
         return !this.errorString.equals("");
     }
+
+    public Contract getContract() {
+        if(contract == null){
+            contract = cr.getContractWithTimeSheet(parrentUuid);
+        }
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+    
+    
     
     
 
@@ -144,9 +160,18 @@ public class EditTimeEntry implements Serializable {
         entry.setEndTime(LocalTime.ofInstant(endTime.toInstant(), ZoneId.systemDefault()));
         entry.setEntryDate(LocalDate.ofInstant(entryDate.toInstant(), ZoneId.systemDefault()));
         this.timeEntryUuid = cr.storeTimeEntry(entry, parrentUuid);
+        
+        
 
         if (timeEntryUuid != null) {
             entry = null;
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        try{
+        context.getExternalContext().redirect("timesheet_list.xhtml?uuid="+contract.getUuid());
+        }
+        catch(Exception e){
+            
         }
 
     }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,6 +35,11 @@ import tss.logic.CalculationLogic;
             name = "getTimeSheetForContract",
             query = "SELECT c FROM time_sheet c "
             + "WHERE c.parent = :contract ORDER BY c.id"
+    ),
+     @NamedQuery(
+            name ="getTimeSheetWithStatus",
+            query = "SELECT c FROM time_sheet c "
+            + "WHERE c.status = :status AND c.parent =:contract"
     )
 })
 @Entity(name = "time_sheet")
@@ -56,7 +62,7 @@ public class TimeSheetEntity extends BaseEntity implements Serializable {
 
     private LocalDate signedBySupervisor;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
     private Set<TimeSheetEntryEntity> timeSheetEntry;
 
     @ManyToOne
@@ -140,6 +146,14 @@ public class TimeSheetEntity extends BaseEntity implements Serializable {
     
     public void calculateDueHours(){
         this.hoursDue = CalculationLogic.getHoursDue(startDate, endDate,parent.getHoursPerWeek(),parent.getWorkingDaysPerWeek());
+    }
+    
+    public double getWorkHours(){
+        double h = 0.0;
+       h = getTimeSheetEntry().stream().mapToDouble(TimeSheetEntryEntity::getHours)
+                .reduce(h, (a,b) -> a+b);
+       return h;
+        
     }
 
 }

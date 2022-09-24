@@ -7,7 +7,6 @@ package tss;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -27,22 +26,22 @@ public class TimeSheetBean implements Serializable{
     private ContractRemote cr;
     
     
-    private String uuid;
+    private String contractUuid;
     
     private Contract c;
     private TimeSheet currentTs;
 
-    public String getUuid() {
-        return uuid;
+    public String getContractUuid() {
+        return contractUuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setContractUuid(String uuid) {
+        this.contractUuid = uuid;
     }
     
     public Contract getConract(){
         if(c == null){
-             c = cr.getContractWithUuid(uuid);
+             c = cr.getContractWithUuid(contractUuid);
         }
         return c;
     }
@@ -50,12 +49,12 @@ public class TimeSheetBean implements Serializable{
     
     public List<TimeSheet> getAllTimeSheet(){
         
-       return cr.getAlltTimeSheetFor(uuid);
+       return cr.getAlltTimeSheetFor(contractUuid);
     }
     
     public TimeSheet getCurrentTimeSheet(){
         if(currentTs == null){
-            currentTs = cr.getCurrentTimeSheet(uuid);
+            currentTs = cr.getCurrentTimeSheet(contractUuid);
         }
         return currentTs;
     }
@@ -68,7 +67,10 @@ public class TimeSheetBean implements Serializable{
     
     public void addTimeSheets(){
         
-        cr.storeTimeSheetFor(uuid);
+        cr.storeTimeSheetFor(contractUuid);
     }
     
+    public boolean isTimesheetAwailable(){
+        return !getAllTimeSheet().isEmpty();
+    }
 }

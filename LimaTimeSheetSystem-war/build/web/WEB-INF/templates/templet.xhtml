@@ -15,6 +15,7 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/> 
             <title>${title} </title>
+            
             <link rel="stylesheet" href="#{resource['css:all.css']}"/>
             <link rel="stylesheet" href="#{resource['css:tss.css']}"/>
 
@@ -22,31 +23,13 @@
             <ui:insert name="scripts"/>
         </h:head>
         <h:body id="body">
-            ${msg.appTitle}
+           
             <b:container>
-
-
 
                 <br/>
                 <br/>
                 <ui:insert name="content" />
             </b:container>
-            <footer>
-            <b:well class="topsep">
-            <b:form>
-            <b:commandButton
-                actionListener="#{lc.selectGerman}"
-                value="${msg.localeSelectGerman}"
-              
-                />
-            <b:commandButton    
-                                actionListener="#{lc.selectEnglish}"
-                                value="${msg.localeSelectEnglish}"
-                                
-                                />
-            </b:form>
-                </b:well>
-            </footer>
 
         </h:body>
     </f:view>
