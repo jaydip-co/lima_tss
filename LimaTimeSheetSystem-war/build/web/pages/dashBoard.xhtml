@@ -127,7 +127,7 @@
                             look="info" icon="plus-sign"
                             outcome="EditContract"
                             span="6"
-                            value="New Contracts">
+                            value="#{msg.dbNewContractbtn}">
                             <f:param name="uuid" value="new"/>  
                         </b:button>
                     </ui:fragment> 
@@ -135,7 +135,7 @@
                 <br/>
                 <b:row>
                     
-                    <h:commandButton value="Logout" 
+                    <h:commandButton value="#{msg.dbLogOutbtn}" 
                                      action="Welcome"
                                      actionListener="#{loginBean.logout}"
                                      />
