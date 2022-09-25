@@ -86,5 +86,7 @@ public interface ContractRemote {
     public boolean revoveSignature(String signature);
     
     public boolean archieveSheet(String sheetUuid);
+    
+    public double getRemainingVacation(String contractUuid);
 
 }

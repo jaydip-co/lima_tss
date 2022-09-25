@@ -39,6 +39,7 @@ import tss.entities.TimeSheetEntity;
 import tss.entities.TimeSheetEntryEntity;
 import tss.entities.UserRoleEntity;
 import tss.enums.ContractStatus;
+import tss.enums.ReportType;
 import tss.enums.TimeSheetStatus;
 import tss.logic.CalculationLogic;
 import tss.logic.TsTimePeriod;
@@ -241,6 +242,22 @@ public class ContractRemoteInmpl implements ContractRemote {
     public void deleteContract(String contractUUid) {
         ca.deleteContract(contractUUid);
     }
+
+    @Override
+    public double getRemainingVacation(String contractUuid) {
+        ContractEntity c = ca.getContractEntityFromUUID(contractUuid);
+        double v = c.getVacationHour();
+        double vh = 0;
+        Set<TimeSheetEntryEntity> entires = new HashSet<>();
+        for(TimeSheetEntity e : c.getTimeSheets()){
+            vh = vh +   e.getTimeSheetEntry().stream().filter(i -> i.getReportType() == ReportType.VACATION)
+                    .mapToDouble(TimeSheetEntryEntity::getHours)
+                    .reduce(0, (a,b) -> a+b);
+        }
+       return v - vh;
+    }
+    
+    
 
     @Override
     public String storeContract(Contract c, Person employee,

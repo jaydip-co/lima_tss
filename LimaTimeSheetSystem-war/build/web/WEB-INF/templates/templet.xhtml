@@ -18,18 +18,21 @@
             
             <link rel="stylesheet" href="#{resource['css:all.css']}"/>
             <link rel="stylesheet" href="#{resource['css:tss.css']}"/>
+            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
 
             <h:outputStylesheet name="#{resource['bootstrap/css/bootstrap.min.css']}"/>
             <ui:insert name="scripts"/>
         </h:head>
         <h:body id="body">
            
-            <b:container>
+            <b:container >
 
                 <br/>
                 <br/>
                 <ui:insert name="content" />
             </b:container>
+            
+                
 
         </h:body>
     </f:view>

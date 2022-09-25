@@ -9,9 +9,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 import javax.ejb.EJB;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -45,9 +45,9 @@ public class EditTimeEntry implements Serializable {
     private TimeSheetEntry entry;
 
     private Date entryDate;
-    
+
     private String errorString = "";
-    
+
     private Contract contract;
 
     public ReportType[] getReportTypes() {
@@ -113,13 +113,13 @@ public class EditTimeEntry implements Serializable {
     public String getErrorString() {
         return errorString;
     }
-    
-    public boolean isValidationError(){
+
+    public boolean isValidationError() {
         return !this.errorString.equals("");
     }
 
     public Contract getContract() {
-        if(contract == null){
+        if (contract == null) {
             contract = cr.getContractWithTimeSheet(parrentUuid);
         }
         return contract;
@@ -128,10 +128,6 @@ public class EditTimeEntry implements Serializable {
     public void setContract(Contract contract) {
         this.contract = contract;
     }
-    
-    
-    
-    
 
     public TimeSheetEntry getEntry() {
         if (this.entry != null) {
@@ -150,8 +146,8 @@ public class EditTimeEntry implements Serializable {
     }
 
     public void storeEntry() {
-        errorString ="";
-        if(startTime.compareTo(endTime) >= 0){
+        errorString = "";
+        if (startTime.compareTo(endTime) >= 0) {
             errorString = "start time can not be after end time";
             return;
         }
@@ -159,19 +155,24 @@ public class EditTimeEntry implements Serializable {
         entry.setStartTime(LocalTime.ofInstant(startTime.toInstant(), ZoneId.systemDefault()));
         entry.setEndTime(LocalTime.ofInstant(endTime.toInstant(), ZoneId.systemDefault()));
         entry.setEntryDate(LocalDate.ofInstant(entryDate.toInstant(), ZoneId.systemDefault()));
+        int min = entry.getEndTime().get(ChronoField.SECOND_OF_DAY) - entry.getStartTime().get(ChronoField.SECOND_OF_DAY);
+        double hours = ((double) min / (double) 3600);
+        double remainingVacation = cr.getRemainingVacation(getContract().getUuid());
+        if (hours > remainingVacation) {
+            errorString = "Vacation hours can not be more than " + (int) remainingVacation;
+            return;
+            
+        }
         this.timeEntryUuid = cr.storeTimeEntry(entry, parrentUuid);
-        
-        
 
         if (timeEntryUuid != null) {
             entry = null;
         }
         FacesContext context = FacesContext.getCurrentInstance();
-        try{
-        context.getExternalContext().redirect("timesheet_list.xhtml?uuid="+contract.getUuid());
-        }
-        catch(Exception e){
-            
+        try {
+            context.getExternalContext().redirect("timesheet_list.xhtml?uuid=" + contract.getUuid());
+        } catch (Exception e) {
+
         }
 
     }

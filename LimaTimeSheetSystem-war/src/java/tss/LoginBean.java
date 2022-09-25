@@ -82,6 +82,10 @@ public class LoginBean implements Serializable{
        return userRoles.toString();
     }
      
+    public boolean isLoggedIn(){
+        return currentUser != null;
+    }
+     
      public boolean isSecretary(){
        return  hasRole(UserRoles.SECRETARY);
      }
@@ -122,5 +126,6 @@ public class LoginBean implements Serializable{
                 
          return p.isUserInRole(role);
      }
+     
     
 }

@@ -20,101 +20,102 @@
     <ui:param name="pageHeadline" value="title"/>
     <ui:define name="content">
         #{editContract.uuid}
-        <b:form>
-            <b:column>
+        
+            <b:form>
+                <b:column>
 
-                <h:outputLabel value="#{editContract.contract.name}"
-                               class="fa-3x"/>
-                <b:container class="mngtable" >
-                    <b:row styleClass="show-grid">
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="Status"/>
-                        </b:column>
-                        <b:column col-xs="1" col-sm="1" col-md="1" >
-                            <h:outputLabel value=":"/>
-                        </b:column>
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="#{editContract.contract.status}"/>
-                        </b:column>
-                    </b:row>
-                    <b:row styleClass="show-grid">
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="Start Date"/>
-                        </b:column>
-                        <b:column col-xs="1" col-sm="1" col-md="1" >
-                            <h:outputLabel value=":"/>
-                        </b:column>
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="1-9-2022"/>
-                        </b:column>
-                    </b:row>
-                    <b:row styleClass="show-grid">
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="End Date"/>
-                        </b:column>
-                        <b:column col-xs="1" col-sm="1" col-md="1" >
-                            <h:outputLabel value=":"/>
-                        </b:column>
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="30-9-2022"/>
-                        </b:column>
-                    </b:row>
-                    <b:row styleClass="show-grid">
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="Employee"/>
-                        </b:column>
-                        <b:column col-xs="1" col-sm="1" col-md="1" >
-                            <h:outputLabel value=":"/>
-                        </b:column>
-                        <b:column col-xs="3" col-sm="2" col-md="2">
-                            <h:outputLabel value="Employee Name"/>
-                        </b:column>
-                    </b:row>
-                    <br/>
-                    <br/>
-                    <ui:fragment rendered="#{editContract.inPrepared}">
-                        
+                    <h:outputLabel value="#{editContract.contract.name}"
+                                   class="fa-3x"/>
+                    <b:container class="mngtable" >
                         <b:row styleClass="show-grid">
-                            <b:column span="2" class="col-2">
-                                <b:commandButton
-                                    class="col-2 btn-success"
-                                    value="Start Contract"
-                                    actionListener="#{editContract.startContract}"
-                                    />
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Status"/>
                             </b:column>
-                              <b:column span="2" class="col-2">
-                                <b:commandButton
-                                    class="col-2 btn-danger"
-                                    value="Delete"
-                                    action="DashBoard"
-                                    actionListener="#{editContract.deleteContract}"
-                                    />
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
                             </b:column>
-
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="#{editContract.contract.status}"/>
+                            </b:column>
                         </b:row>
-                    </ui:fragment>
-                    <br/>
-                    <br/>
-                    <b:row styleClass="show-grid">
-                          
-
-                        </b:row>
-                    <ui:fragment rendered="#{editContract.inStarted}">
-                        
                         <b:row styleClass="show-grid">
-                            <b:column span="2" class="col-2">
-                                <b:commandButton
-                                    class="col-2 btn-danger"
-                                    value="Terminate"
-                                    actionListener="#{editContract.terminate}"
-                                    />
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Start Date"/>
                             </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="1-9-2022"/>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="End Date"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="30-9-2022"/>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Employee"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Employee Name"/>
+                            </b:column>
+                        </b:row>
+                        <br/>
+                        <br/>
+                        <ui:fragment rendered="#{editContract.inPrepared}">
+
+                            <b:row styleClass="show-grid">
+                                <b:column span="2" class="col-2">
+                                    <b:commandButton
+                                        class="col-2 btn-success"
+                                        value="Start Contract"
+                                        actionListener="#{editContract.startContract}"
+                                        />
+                                </b:column>
+                                <b:column span="2" class="col-2">
+                                    <b:commandButton
+                                        class="col-2 btn-danger"
+                                        value="Delete"
+                                        action="DashBoard"
+                                        actionListener="#{editContract.deleteContract}"
+                                        />
+                                </b:column>
+
+                            </b:row>
+                        </ui:fragment>
+                        <br/>
+                        <br/>
+                        <b:row styleClass="show-grid">
+
 
                         </b:row>
-                    </ui:fragment>
-                </b:container>
-            </b:column>
-        </b:form>
+                        <ui:fragment rendered="#{editContract.inStarted}">
+
+                            <b:row styleClass="show-grid">
+                                <b:column span="2" class="col-2">
+                                    <b:commandButton
+                                        class="col-2 btn-danger"
+                                        value="Terminate"
+                                        actionListener="#{editContract.terminate}"
+                                        />
+                                </b:column>
+
+                            </b:row>
+                        </ui:fragment>
+                    </b:container>
+                </b:column>
+            </b:form>
 
     </ui:define>
 </ui:composition>

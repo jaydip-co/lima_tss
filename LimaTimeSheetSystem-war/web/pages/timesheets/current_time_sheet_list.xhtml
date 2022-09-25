@@ -57,20 +57,7 @@ and open the template in the editor.
 
 
         </b:dataTable>
-        <ui:fragment rendered="${timeSheetEntryBean.timeSheet.inProgress
-                                 &amp;&amp; timeSheetEntryBean.employee}">
-            <b:button
-                offset="9"
-                span="3" look="info"
-                icon="plus-sign"   
-                value="Add New Entry"
-                outcome="NewEntry"
-                >
-                <f:param name="uuid" value="new"/>
-                <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
-            </b:button>
-
-        </ui:fragment>
+        
     </b:container>
 
 </ui:composition>
