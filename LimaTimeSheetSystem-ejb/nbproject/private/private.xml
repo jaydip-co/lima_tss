@@ -11,6 +11,7 @@
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-ejb/src/java/tss/remote/ContractRemote.java</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-ejb/src/java/tss/remote/impl/ContractRemoteInmpl.java</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-ejb/src/java/tss/dto/TimeSheet.java</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-ejb/src/java/tss/GeneratePdf.java</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-ejb/src/java/tss/dto/Contract.java</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-ejb/src/java/tss/dto/Convertor.java</file>
         </group>

@@ -21,7 +21,7 @@
 
                 <!--- Employee table -->
                 <ui:fragment rendered="#{dashBoard.contractWithEmployee.size() > 0}">
-                    <h:outputLabel value="Your Contract as Employee"
+                    <h:outputLabel value="#{msg.dashboardEmployeeContract}"
                                    class="fa-2x"/>
                     <br/>
 
@@ -31,16 +31,16 @@
                                      searching="false"
                                      rendered="#{dashBoard.contractWithEmployee.size() > 0}"
                                      value="#{dashBoard.contractWithEmployee}" >
-                            <b:dataTableColumn label="Contract Name" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbDataTableColumnCN}" orderable="false">
                                 ${c.name}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Status" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbDataTableColumnStatus}" orderable="false">
                                 #{c.status}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Start Date" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbDataTableColumnSD}" orderable="false">
                                 #{c.startDate}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="End Date" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbDataTableColumnED}" orderable="false">
                                 #{c.endDate}
                             </b:dataTableColumn>
                             <b:dataTableColumn label=""  orderable="false">
@@ -60,7 +60,7 @@
                     
                     <b:row>
                         <b:column span="12" offset="4">
-                             <h:outputLabel value="Don't have Contracts Yet" />
+                            <h:outputLabel value="#{msg.dashboardDontHaveContract}" />
                         </b:column>
                     </b:row>
                 </b:container>
@@ -68,7 +68,7 @@
                
                 <br/>
                 <ui:fragment rendered="#{dashBoard.contractWithManager.size() > 0}">
-                    <h:outputLabel value="Your Contracts as Manager" class="fa-2x"/>
+                    <h:outputLabel value="#{msg.dashboardManagerContract}" class="fa-2x"/>
                     <br/>
                     <b:container>
                         <b:dataTable id="table2" striped="true" 
@@ -78,38 +78,38 @@
                                      info="true"
                                      rendered="#{dashBoard.contractWithManager.size() > 0}"
                                      value="#{dashBoard.contractWithManager}">
-                            <b:dataTableColumn label="No." orderable="false">
+                            <b:dataTableColumn label="#{msg.dbManagerTableno}" orderable="false">
                                 1
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Name" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbManagerTableName}" orderable="false">
                                 #{c.name}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Your Role" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbManagerTableYR}" orderable="false">
                                 #{c.currentUserRole}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Status" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbManagerTableStatus}" orderable="false">
                                 #{c.status}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Due Hours" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbManagerTableDH}" orderable="false">
                                 #{c.hourDue}
                             </b:dataTableColumn>
-                            <b:dataTableColumn label="Actions" orderable="false">
+                            <b:dataTableColumn label="#{msg.dbManagerTableActions}" orderable="false">
                                 <b:row class="fa-1x">
                                     <b:column>
                                         <h:link outcome="EditContract" rendered="${c.inPrepared()}">
-                                            <h:outputText value="Edit" styleClass="fa-1x" />
+                                            <h:outputText value="#{msg.dbManagerTableEditBtn}" styleClass="fa-1x" />
                                             <f:param name="uuid" value="#{c.uuid}"/>
                                         </h:link>
                                     </b:column>
                                     <b:column>
                                         <h:link outcome="ManageContract">
-                                            <h:outputText value="  Manage" styleClass="fa-1x" />
+                                            <h:outputText value="#{msg.dbManagerTableManageBtn}" styleClass="fa-1x" />
                                             <f:param name="uuid" value="#{c.uuid}"/>
                                         </h:link>
                                     </b:column>
                                     <b:column>
                                         <h:link outcome="TimeSheetList" rendered="${!c.inPrepared()}">
-                                            <h:outputText value="  Sheets" styleClass="fa-1x" />
+                                            <h:outputText value="#{msg.dbManagerTableSheetsBtn}" styleClass="fa-1x" />
                                             <f:param name="uuid" value="#{c.uuid}"/>
                                         </h:link>
                                     </b:column>
@@ -127,7 +127,7 @@
                             look="info" icon="plus-sign"
                             outcome="EditContract"
                             span="6"
-                            value="New Contract">
+                            value="New Contracts">
                             <f:param name="uuid" value="new"/>  
                         </b:button>
                     </ui:fragment> 
