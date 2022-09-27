@@ -22,26 +22,26 @@ and open the template in the editor.
                 <h:outputText value="#{timeSheetEntryBean.allTimeShhetEntry.indexOf(c) + 1}"/>
             </b:dataTableColumn>
 
-            <b:dataTableColumn label="Entry Date">
+            <b:dataTableColumn label="#{msg.ctslDataTableCEntryDate}">
                 <h:outputText value="#{c.entryDate}"/>
             </b:dataTableColumn>
-            <b:dataTableColumn label="Report Type" orderable="false">
+            <b:dataTableColumn label="#{msg.ctslDataTableCReportType}" orderable="false">
                 <h:outputText value="#{c.reportType}"/>
             </b:dataTableColumn>
-            <b:dataTableColumn label="Start Time" orderable="false">
+            <b:dataTableColumn label="#{msg.ctslDataTableCStartTime}" orderable="false">
                 <h:outputText value="#{c.startTime}"/>
             </b:dataTableColumn>
-            <b:dataTableColumn label="End Time" orderable="false">
+            <b:dataTableColumn label="#{msg.ctslDataTableCEndTime}" orderable="false">
                 <h:outputText value="#{c.endTime}"/>
             </b:dataTableColumn>
-            <b:dataTableColumn label="Hours" orderable="false">
+            <b:dataTableColumn label="#{msg.ctslDataTableCHours}" orderable="false">
                 <h:outputText value="#{c.hours}"/>
             </b:dataTableColumn>
 
             <b:dataTableColumn label=""  orderable="false">
                 <ui:fragment rendered="${timeSheetEntryBean.timeSheet.inProgress}">
                     <h:link outcome="NewEntry">
-                        <h:outputText value="Edit"/>
+                        <h:outputText value="#{msg.ctslDataTableCEditbtn}"/>
 
                         <f:param name="uuid" value="#{c.uuid}"/>
                         <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
@@ -62,8 +62,8 @@ and open the template in the editor.
             <b:button
                 offset="9"
                 span="3" look="info"
-                icon="plus-sign"   
-                value="Add New Entry"
+                icon="plus-sign"
+                value="#{msg.ctslDataTableCAddNewEntrybtn}"
                 outcome="NewEntry"
                 >
                 <f:param name="uuid" value="new"/>

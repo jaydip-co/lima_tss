@@ -27,9 +27,9 @@
         </h:link>
         <b:container>
             <br/>
-              <h:outputLabel value="Contract :- #{timeSheetBean.conract.name}" class="fa-1-5x"/>
+            <h:outputLabel value="#{msg.tsListContractTxt} #{timeSheetBean.conract.name}" class="fa-1-5x"/>
             <br/>
-            <h:outputText value="Time Sheets" class="fa-1-5x"/>
+            <h:outputText value="#{msg.tsListTimeSheetsTxt}" class="fa-1-5x"/>
             <br/>
            
             
@@ -43,20 +43,20 @@
                          rendered="${timeSheetBean.timesheetAwailable}"
                          searching="false" 
                          value="#{timeSheetBean.allTimeSheet}">
-                <b:dataTableColumn label="Period" orderable="false">
+                <b:dataTableColumn label="#{msg.tsListDTCPeriod}" orderable="false">
                     <h:outputText value="#{c.startDate} - #{c.endDate}"/>
                 </b:dataTableColumn>
-                <b:dataTableColumn label="Status" orderable="false">
+                <b:dataTableColumn label="#{msg.tsListDTCStatus}" orderable="false">
                     <h:outputText value="#{c.status}"/>
                 </b:dataTableColumn>
-                 <b:dataTableColumn label="hours" orderable="false">
+                <b:dataTableColumn label="#{msg.tsListDTCHours}" orderable="false">
                     <h:outputText value="#{c.hoursDue}"/>
                 </b:dataTableColumn>
-                <b:dataTableColumn label="Worked hours" orderable="false">
+                <b:dataTableColumn label="#{msg.tsListDTCWorkedHours}" orderable="false">
                     <h:outputText value="#{c.workHours}"/>
                 </b:dataTableColumn>
                  <b:dataTableColumn label="" orderable="false">
-                     <h:link outcome="TimeSheetEntry" value="view">
+                     <h:link outcome="TimeSheetEntry" value="#{msg.tsListDTViewBtn}">
                         <f:param name="uuid" value="${c.uuid}"/>
                         <f:param name="parentUuid" value="#{timeSheetBean.contractUuid}"/>
                     </h:link>

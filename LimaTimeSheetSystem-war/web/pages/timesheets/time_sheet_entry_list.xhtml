@@ -28,24 +28,24 @@
         
         <h:link outcome="TimeSheetList">
             <f:param name="uuid" value="${timeSheetEntryBean.parentUuid}"/>
-            <b:button value="Go Back" icon="back"/>
+            <b:button value="#{msg.tselGBbtn}" icon="back"/>
         </h:link>
         <br/>
-        <h:outputLabel class="fa-2x" value="Contract:- #{timeSheetEntryBean.contract.name}" />
+        <h:outputLabel class="fa-2x" value="#{msg.tselContractTxt} #{timeSheetEntryBean.contract.name}" />
         <br/>
         <h:outputLabel class="fa-1-5x" value="${timeSheetEntryBean.timeSheet.startDate} - ${timeSheetEntryBean.timeSheet.endDate}"/>
         <br/>
-        <h:outputText value="Total:- ${timeSheetEntryBean.timeSheet.hoursDue} hours" />
+        <h:outputText value="#{msg.tselTotalTxt} ${timeSheetEntryBean.timeSheet.hoursDue} hours" />
         <br/>
-        <h:outputText value="Remaining:- ${timeSheetEntryBean.timeSheet.hoursDue - timeSheetEntryBean.timeSheet.workHours} hours" />
+        <h:outputText value="#{msg.tselRemainingTxt} ${timeSheetEntryBean.timeSheet.hoursDue - timeSheetEntryBean.timeSheet.workHours} hours" />
         <br/>
-        <h:outputText value="Status: - #{timeSheetEntryBean.timeSheet.status}"/>
+        <h:outputText value="#{msg.tselStatusTxt} #{timeSheetEntryBean.timeSheet.status}"/>
         <br/>
         <br/>
         <b:container style="text-align: center" class="col-12" rendered="#{timeSheetEntryBean.allTimeShhetEntry.size() == 0}">
 
             <p>
-                Don't have data to display
+                #{msg.tselDisplayText}
             </p> 
         </b:container>
         <ui:fragment rendered="#{timeSheetEntryBean.allTimeShhetEntry.size() > 0}">
@@ -57,10 +57,10 @@
                 offset="9"
                 span="3" look="info"
                 icon="plus-sign"   
-                value="Add New Entry"
+                value="#{msg.tselAddNewEntrybtn}"
                 outcome="NewEntry"
                 >
-                <f:param name="uuid" value="new"/>
+                <f:param name="uuid" value="#{msg.tselNewTxt}"/>
                 <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
             </b:button>
 
@@ -68,10 +68,10 @@
         <ui:fragment rendered="${timeSheetEntryBean.startStatus &amp;&amp; timeSheetEntryBean.employee}">
             <b:form>
 
-                <b:commandButton  value="Sign Sheet"
+                <b:commandButton  value="#{msg.tselSignSheetCommandbtn}"
                                   rendered="${timeSheetEntryBean.timeSheet.inProgress}" 
                                   actionListener="#{timeSheetEntryBean.signSheet}"/>
-                <b:commandButton  value="Revoke Signature"
+                <b:commandButton  value="#{msg.tselRevokeSignatureCommandbtn}"
                                   rendered="${timeSheetEntryBean.timeSheet.signedByEmployee}" 
                                   actionListener="#{timeSheetEntryBean.revokeSignature}"/>
             </b:form>
@@ -79,7 +79,7 @@
         <ui:fragment rendered="${timeSheetEntryBean.supervisor}">
             <b:form>
 
-                <b:commandButton  value="Sign Sheet"
+                <b:commandButton  value="#{msg.tselSignSheetCommandbtn}"
                                   rendered="${timeSheetEntryBean.currentSheetinSignedByEmployee}" 
                                   actionListener="#{timeSheetEntryBean.signSheet()}"/>
             </b:form>
@@ -87,7 +87,7 @@
         <ui:fragment rendered="${timeSheetEntryBean.manager}">
             <b:form>
 
-                <b:commandButton  value="Archieve Sheet"
+                <b:commandButton  value="#{msg.tselArchiveSheetCommandbtn}"
                                   rendered="${timeSheetEntryBean.currentSheetinSignedBySupervisor}" 
                                   actionListener="#{timeSheetEntryBean.archieveSheet}"/>
             </b:form>
