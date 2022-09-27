@@ -51,11 +51,7 @@
             <redirect>true</redirect>
             <to-view-id>/pages/login.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>userList</from-outcome>
-            <redirect>true</redirect>
-            <to-view-id>/pages/user/userList.xhtml</to-view-id>
-        </navigation-case>
+        
         <navigation-case>
             <from-outcome>Welcome</from-outcome>
             <redirect>true</redirect>
@@ -100,12 +96,18 @@
             <redirect>true</redirect>
             <to-view-id>/pages/timesheets/new_entry.xhtml</to-view-id>   
         </navigation-case>
+        <navigation-case>
+            <from-outcome>UserData</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/user/user_data.xhtml</to-view-id>   
+        </navigation-case>
         
         <navigation-case>
             <from-outcome>Crud</from-outcome>
             <redirect>true</redirect>
             <to-view-id>/pages/user/crud-operation.html</to-view-id>
         </navigation-case>
+        
         <navigation-case>
             <from-outcome>ContractList</from-outcome>
             <redirect>true</redirect>

@@ -40,10 +40,10 @@ public class  ContractUserRole extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER)
     private PersonEntity person;
     
-    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER)
     private ContractEntity contract;
     
     private String userrole;

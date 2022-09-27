@@ -303,6 +303,10 @@ public class EditContract implements Serializable{
         LocalDate sD = convert(startDate);
         LocalDate eD = convert(endDate);
         errorMessage = "";
+        if(sD.isBefore(LocalDate.now())){
+            errorMessage = "Start can not be in past";
+            return;
+        }
         if(sD.getDayOfMonth() != 1 || eD.getDayOfMonth() != eD.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth())
         {
             errorMessage = "Please Select Start Date as first Day of month and last Date as last Day of Month";

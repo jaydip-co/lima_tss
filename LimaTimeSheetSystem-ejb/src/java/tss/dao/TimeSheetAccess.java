@@ -94,4 +94,12 @@ public class TimeSheetAccess extends BaseAccess {
         return true;
     }
     
+    public boolean  deleteEntryWith(String entryUuid){
+        TimeSheetEntryEntity entry = getTimeEntryWith(entryUuid);
+        entry.getParent().getTimeSheetEntry().remove(entry);
+        entry.setParent(null);
+        em.remove(entry);
+        return true;
+    }
+    
 }

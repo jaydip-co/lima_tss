@@ -24,134 +24,162 @@
     <ui:define name="content">
 
         <b:form  class="container comment-form">
-           
-                   
-
-                    <b:alert severity="danger" rendered="${editContract.isValidationError()}">
-                        ${editContract.errorMessage}
-                    </b:alert>
-                    <div  class="col-3  form-group">
 
 
-                        <b:inputText type="text" id="contractname" label="Name:" class="form-control" value="#{editContract.contract.name}"  required="true" />
-                        <b:message />
-                    </div>
 
-                    <div class="col-3 form-group">
-
-
-                        <b:datepicker label="Start Date" 
-                                      change-month="true"
-                                      value="#{editContract.startDate}" required="true"/>
-                        <b:message />
-
-                    </div>
-
-                    <div class="col-3 form-group">
-                        <b:datepicker label="End Date"  value="#{editContract.endDate}" required="true"/>
-                        <b:message />
-                    </div>
-                    <div  class="col-3  form-group">
-                        <b:inputText type="number" id="hoursPerWeek" label="hours Per Week:" class="form-control" value="#{editContract.hpw}"  required="true" >
-                            <f:validateRegex pattern="[\d ]+"/>
-                        </b:inputText>
-                        <b:message />
-                    </div>
-
-                    <div  class="col-3  form-group">
-                        <b:inputText type="number" id="workingDayPerWeek" label="Working Days Per Week:" class="form-control" value="#{editContract.wdpw}"  required="true" >
-                            <f:validateRegex pattern="[\d ]+"/>
-                        </b:inputText>
-                        <b:message />
-                    </div>
-
-                    <div  class="col-3  form-group">
+            <b:alert severity="danger" rendered="${editContract.isValidationError()}">
+                ${editContract.errorMessage}
+            </b:alert>
+            <div  class="col-3  form-group">
 
 
-                        <b:inputText type="number" id="vacationDayPerYear" label="Vacation Days per Year:" class="form-control" value="#{editContract.vdpy}"  required="true" >
-                            <f:validateRegex pattern="[\d ]+"/>
-                        </b:inputText>
-                        <b:message />
-                    </div>
+                <b:inputText type="text" id="contractname"
+                             label="Name:" class="form-control"
+                             value="#{editContract.contract.name}"
+                             required="true" 
+                             
+                             requiredMessage="#{msg.editContractRequired}"
+                             validatorMessage="Required"/>
+                <b:message />
+            </div>
 
-                    <div class="col-3 form-group">
-
-
-                        <b:selectOneMenu value="#{editContract.frq}" label="Frequency" class=""  required="true"
-                                         select2="true">
-
-                            <f:selectItem itemLabel="WEEKLY" itemValue="1" />
-                            <f:selectItem itemLabel="MONTHLY" itemValue="2" />
-
-                        </b:selectOneMenu>
-                        <b:message />
-
-                    </div>
-
-                    <div class="col-3 form-group">
-                        <b:selectOneMenu value="#{editContract.employee}" label="Employee"  required="true"
-                                         select2="true">
-                            <f:selectItem itemLabel="(Please select)" itemValue="" />
-
-                            <f:selectItems value="#{editContract.allUsers}" var="c" 
-                                           itemValue="#{c}" itemLabel="#{c.firstName}"/>
-                        </b:selectOneMenu>
-                        <b:message />
-                    </div>
-                    <div class="col-3 form-group">
-                        <b:selectOneMenu value="#{editContract.supervisor}" label="Supervisor"  required="true"
-                                         select2="true">
-                            <f:selectItem itemLabel="(Please select)" itemValue="" />
-
-                            <f:selectItems value="#{editContract.staffMembers}" var="c" 
-                                           itemValue="#{c}" itemLabel="#{c.firstName}"/>
-                        </b:selectOneMenu>
-                        <b:message />
-                    </div>
-                    <div class="col-3 form-group">
-                        <b:selectMultiMenu value="#{editContract.secr}"
-                                           label="Secretary"  required="true"
-                                           >
+            <div class="col-3 form-group">
 
 
-                            <f:selectItems value="#{editContract.staffMembers}" var="c" 
-                                           itemValue="#{c.uuid}" itemLabel="#{c.firstName}"/>
-                        </b:selectMultiMenu>
-                    </div>
-                    <br/>
-                    <br/>
-                    <div class="col-3 form-group">
-                        <b:selectMultiMenu value="#{editContract.assis}"
-                                           label="Assistant" 
-                                           >
+                <b:datepicker label="Start Date" 
+                              change-month="true"
+                              value="#{editContract.startDate}" required="true"
+                              requiredMessage="#{msg.editContractRequired}"/>
+                <b:message />
+
+            </div>
+
+            <div class="col-3 form-group">
+                <b:datepicker label="End Date"  value="#{editContract.endDate}" 
+                              required="true"
+                               change-month="true"
+                              requiredMessage="#{msg.editContractRequired}"/>
+                <b:message />
+            </div>
+            <div  class="col-3  form-group">
+                <b:inputText type="number" id="hoursPerWeek" label="hours Per Week:"
+                             class="form-control" value="#{editContract.hpw}"  required="true"
+                             requiredMessage="#{msg.editContractRequired}"
+                             validatorMessage="Enter Valid Input">
+                    <f:validateRegex pattern="[\d]+[\.][\d]+|[\d]+"/>
+                </b:inputText>
+                <b:message />
+            </div>
+
+            <div  class="col-3  form-group">
+                <b:inputText type="number" id="workingDayPerWeek" label="Working Days Per Week:" class="form-control" value="#{editContract.wdpw}"
+                             required="true"
+                             requiredMessage="#{msg.editContractRequired}"
+                             validatorMessage="Enter Valid Input">
+                    <f:validateRegex pattern="[\d ]+"/>
+                </b:inputText>
+                <b:message />
+            </div>
+
+            <div  class="col-3  form-group">
 
 
-                            <f:selectItems value="#{editContract.staffMembers}" var="c" 
-                                           itemValue="#{c.uuid}" itemLabel="#{c.firstName}"/>
-                        </b:selectMultiMenu>
-                    </div>
-                    <br/>
-                    <br/>
+                <b:inputText type="number" id="vacationDayPerYear" 
+                             label="Vacation Days per Year:" class="form-control"
+                             value="#{editContract.vdpy}"  required="true"
+                             requiredMessage="#{msg.editContractRequired}"
+                             validatorMessage="Enter Valid Input">
+                    <f:validateRegex pattern="[\d ]+"/>
+                </b:inputText>
+                <b:message />
+            </div>
+
+            <div class="col-3 form-group">
 
 
-                    <h:commandLink actionListener="#{editContract.storeContract}"
-                                   action="DashBoard">
-                        <b:button class="btn-success" value="Save"/>
-                        
-                    </h:commandLink>    
-                        <h:commandButton 
-                            class="btn-success"
-                            
-                            value="Save"
-                            actionListener="#{editContract.storeContract}"/>
-                        <h:link outcome="DashBoard" >
-                            <b:button class="btn-danger" value="Cancel">
-                                
-                            </b:button>
-                        </h:link>
-                        
+                <b:selectOneMenu value="#{editContract.frq}" label="Frequency" class=""  required="true"
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 select2="true">
 
-                
+                    <f:selectItem itemLabel="WEEKLY" itemValue="1" />
+                    <f:selectItem itemLabel="MONTHLY" itemValue="2" />
+
+                </b:selectOneMenu>
+                <b:message />
+
+            </div>
+
+            <div class="col-3 form-group">
+                <b:selectOneMenu value="#{editContract.employee}" label="Employee"  required="true"
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 select2="true">
+                    <f:selectItem itemLabel="(Please select)" itemValue="" />
+
+                    <f:selectItems value="#{editContract.allUsers}" var="c" 
+                                   itemValue="#{c}" itemLabel="#{c.firstName}"/>
+                </b:selectOneMenu>
+                <b:message />
+            </div>
+            <div class="col-3 form-group">
+                <b:selectOneMenu value="#{editContract.supervisor}" label="Supervisor"  required="true"
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 select2="true">
+                    <f:selectItem itemLabel="(Please select)" itemValue="" />
+
+                    <f:selectItems value="#{editContract.staffMembers}" var="c" 
+                                   itemValue="#{c}" itemLabel="#{c.firstName}"/>
+                </b:selectOneMenu>
+                <b:message />
+            </div>
+            <div class="col-3 form-group">
+                <b:selectMultiMenu value="#{editContract.secr}"
+                                   label="Secretary"  required="true"
+                                   requiredMessage="#{msg.editContractRequired}"
+                                   nonSelectedText="#{msg.editContractNotSelected}"
+                                   
+                                   >
+
+
+                    <f:selectItems value="#{editContract.staffMembers}" var="c" 
+                                   itemValue="#{c.uuid}" itemLabel="#{c.firstName}"/>
+                </b:selectMultiMenu>
+                 <b:message />
+            </div>
+            <br/>
+            <br/>
+            <div class="col-3 form-group">
+                <b:selectMultiMenu value="#{editContract.assis}"
+                                   label="Assistant"
+                                   nonSelectedText="#{msg.editContractNotSelected}"
+                                   >
+
+
+                    <f:selectItems value="#{editContract.staffMembers}" var="c" 
+                                   itemValue="#{c.uuid}" itemLabel="#{c.firstName}"/>
+                </b:selectMultiMenu>
+            </div>
+            <br/>
+            <br/>
+            <b:row>
+                <b:column span="1">
+                      <h:commandLink actionListener="#{editContract.storeContract}"
+                           >
+                <b:button class="btn-success" value="Save"/>
+
+            </h:commandLink>    
+                </b:column>
+                <b:column span="1">
+                      <h:link outcome="DashBoard" >
+                <b:button class="btn-danger" value="Cancel">
+
+                </b:button>
+            </h:link>
+                </b:column>
+            </b:row>
+
+          
+
+
         </b:form>
 
     </ui:define>

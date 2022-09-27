@@ -5,6 +5,9 @@
  */
 package tss;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,34 +24,35 @@ import tss.remote.ContractRemote;
 @RequestScoped
 @Named
 public class DashBoard {
-    
+
     @EJB
     ContractRemote cr;
-    
-    
-    public List<Contract> getContracts(){
+
+    public List<Contract> getContracts() {
         List<Contract> contracts;
-       contracts = cr.getAllContract();
+        contracts = cr.getAllContract();
         return contracts;
     }
-    
-    public boolean isContractAwailable(){
+
+    public boolean isContractAwailable() {
         return !getContracts().isEmpty();
     }
-    
-    public List<Contract> getContractWithEmployee(){
-        
+
+    public List<Contract> getContractWithEmployee() {
+
         List<Contract> contracts;
         String[] roles = {UserRoles.EMPLOYEE};
         contracts = cr.getContractsWithRole(roles);
         return contracts;
     }
-    public Set<Contract> getContractWithManager(){
-        
+
+    public List<Contract> getContractWithManager() {
         List<Contract> contracts;
-        String[] roles = {UserRoles.SUPERVISOR,UserRoles.SECRETARY,UserRoles.ASSISTANT};
+        String[] roles = {UserRoles.SUPERVISOR, UserRoles.SECRETARY, UserRoles.ASSISTANT};
         contracts = cr.getContractsWithRole(roles);
-        return contracts.stream().collect(Collectors.toSet());
+        return contracts;
     }
-    
+    public List<Contract> getArchievedContract(){
+        return cr.getAllArchievedContract();
+    }
 }
