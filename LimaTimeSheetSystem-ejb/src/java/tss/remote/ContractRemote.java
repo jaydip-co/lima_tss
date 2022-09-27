@@ -52,6 +52,8 @@ public interface ContractRemote {
     public List<Contract> getAllContractWithRole();
 
     public List<Contract> getContractsWithRole(String[] roles);
+    
+    public List<Contract> getAllArchievedContract();
 
     public void startContract(String contractUuid);
     
@@ -63,9 +65,15 @@ public interface ContractRemote {
 
     //////////// user Data /////////
     public Person getUserDataByUserName(String username, List<String> roles, boolean isStaff);
+    
+    public Person getUserDataByUserName(String username);
+    
+    public void storeUserData(Person p);
 
     ///// time sheets ///
     public String storeTimeEntry(TimeSheetEntry tse, String parentUuid);
+    
+    public void deleteTimeSheetEntry(String entryUuid);
 
     public List<TimeSheet> getAlltTimeSheetFor(String contractUuid);
 

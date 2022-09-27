@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+-->
+
+<ui:composition
+    template="/WEB-INF/templates/templet.xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="metadata">
+
+    </ui:define>
+    <ui:param name="title" value="Edit Data"/>
+    <ui:define name = "scripts">
+
+    </ui:define>
+    <ui:define name="content">
+         <h:link outcome="DashBoard">
+            
+            <b:button value="Go Back" icon="back"/>
+        </h:link>
+        <br/>
+        <h:outputLabel value="Edit User Data"/>
+        <br/>
+        <br/>
+        <b:form>
+            <b:row>
+            <b:column span="3">
+                <b:inputText type="text" id="fistName"
+                             label="First Name:" class="form-control"
+                             value="#{userDataBean.currentUser.firstName}"
+                             required="true" 
+
+                             requiredMessage="#{msg.editContractRequired}"
+                             validatorMessage="Required"/>
+                <b:message />
+            </b:column>
+            </b:row>
+           
+            <b:row>
+                <b:column span="3">
+                    <b:inputText type="text" id="lastName"
+                                 label="Last Name:" class="form-control"
+                                 value="#{userDataBean.currentUser.lastName}"
+                                 required="true" 
+
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 validatorMessage="Required"/>
+                    <b:message />
+                </b:column>
+            </b:row>
+            <h:outputLabel value="Date Of Birth"/> 
+            
+            <b:row>
+                <b:column span="1">
+                    <b:inputText type="text" id="yyyy"
+                                 label="YYYY" class="form-control"
+                                 value="#{userDataBean.year}"
+                                 required="true"
+                                 maxlength="4"
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 >
+                     
+                    </b:inputText>
+                    <b:message />
+                </b:column>
+                <b:column span="1">
+                    <b:inputText type="text" id="mm"
+                                 label="MM" class="form-control"
+                                 value="#{userDataBean.month}"
+                                 required="true" 
+                                 maxlength="2"
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 validatorMessage="Required"/>
+                    <b:message />
+                </b:column>
+                <b:column span="1">
+                    <b:inputText type="text" id="dd"
+                                 label="DD" class="form-control"
+                                 value="#{userDataBean.day}"
+                                 required="true"
+                                 maxlength="2"
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 validatorMessage="Required"/>
+                    <b:message />
+                </b:column>
+            </b:row>
+            <b:alert severity="danger" rendered="${userDataBean.error}">
+                ${userDataBean.errorString}
+            </b:alert>
+            
+            <b:row>
+                <b:column span="3">
+                    <b:inputText type="text" id="email"
+                                 label="Email:- " class="form-control"
+                                 value="#{userDataBean.currentUser.username}"
+                                 required="true"
+                                 disabled="true"
+                                 
+                                 requiredMessage="#{msg.editContractRequired}"
+                                 validatorMessage="Required"/>
+                    <b:message />
+                </b:column>
+            </b:row>
+           
+                
+                    <b:selectBooleanCheckbox 
+                        
+                        value="#{userDataBean.currentUser.consent}"
+                        caption="I know that TSS store this data"
+                        required="true"
+                      
+                        requiredMessage="#{msg.editContractRequired}"/>
+                    
+                   
+                    <b:message />
+                
+                    <h:commandLink actionListener="#{userDataBean.storeData}"
+                           >
+                <b:button class="btn-success" value="Save"/>
+
+            </h:commandLink>    
+               
+               
+           
+        </b:form>
+    </ui:define>
+</ui:composition>

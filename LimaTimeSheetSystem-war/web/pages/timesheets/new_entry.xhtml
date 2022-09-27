@@ -31,9 +31,11 @@ and open the template in the editor.
             </b:alert>
             <b:row>
                 <b:column span="4">
-                    <b:selectOneMenu label="Entry Type" value="#{editTimeEntry.entry.reportType}" >
+                    <b:selectOneMenu label="Entry Type" 
+                                     value="#{editTimeEntry.entry.reportType}" >
 
-                        <f:selectItems value="#{editTimeEntry.reportTypes}" var="r" itemLabel="#{r}"
+                        <f:selectItems value="#{editTimeEntry.reportTypes}" 
+                                       var="r" itemLabel="#{r}"
                                        itemValue="#{r}"/>
                     </b:selectOneMenu>
                 </b:column>
@@ -90,6 +92,11 @@ and open the template in the editor.
                              value="store"  >
                         
                             </b:commandButton>
+            <ui:fragment rendered="${!editTimeEntry.newEntrey}">
+            <b:commandButton actionListener="#{editTimeEntry.delete}"
+                             
+                             value="Delete b"/>
+            </ui:fragment>
         </b:form>
     </ui:define>
 </ui:composition>

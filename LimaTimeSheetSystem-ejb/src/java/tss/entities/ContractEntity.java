@@ -72,10 +72,10 @@ public class ContractEntity extends BaseEntity implements Serializable {
 
     private int vacationDaysPerYear;
     
-    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "contract",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<ContractUserRole> contractUserRoles;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
     private Set<TimeSheetEntity> timeSheets;
 
     public ContractEntity() {

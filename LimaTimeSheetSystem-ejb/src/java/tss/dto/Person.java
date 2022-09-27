@@ -23,6 +23,8 @@ public class Person extends BaseDTO{
     private String username;
     
     private boolean isStaff;
+    
+    private boolean consent;
 
     public Person() {
         super();
@@ -33,6 +35,7 @@ public class Person extends BaseDTO{
             String lastName,
             LocalDate dob,
             String username,
+            boolean consent,
             boolean isStaff,
             String uuid,
             int jpaVersion) {
@@ -42,6 +45,7 @@ public class Person extends BaseDTO{
         this.dob = dob;
         this.username = username;
         this.isStaff = isStaff;
+        this.consent = consent;
     }
 
     public boolean isIsStaff() {
@@ -50,6 +54,14 @@ public class Person extends BaseDTO{
 
     public void setIsStaff(boolean isStaff) {
         this.isStaff = isStaff;
+    }
+
+    public boolean isConsent() {
+        return consent;
+    }
+
+    public void setConsent(boolean consent) {
+        this.consent = consent;
     }
     
     

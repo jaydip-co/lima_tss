@@ -44,14 +44,13 @@ and open the template in the editor.
                         <h:outputText value="#{msg.ctslDataTableCEditbtn}"/>
 
                         <f:param name="uuid" value="#{c.uuid}"/>
-                        <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
+                        <f:param name="parentUuid" 
+                                 value="#{timeSheetEntryBean.uuid}"/>
                     </h:link>
                 </ui:fragment> 
-                <ui:fragment rendered="${!timeSheetEntryBean.timeSheet.inProgress}">
-
+                <ui:fragment 
+                    rendered="${!timeSheetEntryBean.timeSheet.inProgress}">
                     <h:outputText value="   "/>
-
-
                 </ui:fragment> 
             </b:dataTableColumn>
 
@@ -71,6 +70,7 @@ and open the template in the editor.
             </b:button>
 
         </ui:fragment>
+       
     </b:container>
 
 </ui:composition>

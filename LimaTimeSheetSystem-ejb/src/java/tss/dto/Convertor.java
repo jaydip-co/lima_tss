@@ -89,6 +89,7 @@ public class Convertor {
                 e.getLastName(),
                 e.getDob(),
                 e.getUserName(),
+                e.isConsent(),
                 e.isIsStaffMember(),
                 e.getUuid(),
                 e.getJpaVersion());

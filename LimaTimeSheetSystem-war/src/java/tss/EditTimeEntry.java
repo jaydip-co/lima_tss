@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import tss.dto.Contract;
+import tss.dto.TimeSheet;
 import tss.dto.TimeSheetEntry;
 import tss.enums.ReportType;
 import tss.remote.ContractRemote;
@@ -151,14 +152,21 @@ public class EditTimeEntry implements Serializable {
             errorString = "start time can not be after end time";
             return;
         }
-
+        LocalDate entryD = LocalDate.ofInstant(entryDate.toInstant(), ZoneId.systemDefault());
+        TimeSheet ts = cr.getTimeSheetWith(parrentUuid);
+        if(!(entryD.equals(ts.getStartDate()) || entryD.equals(ts.getEndDate()) || 
+                (entryD.isAfter(ts.getStartDate()) && entryD.equals(ts.getEndDate())))){
+            errorString = "Entry date should be between sheet period";
+            return;
+        }
+        
         entry.setStartTime(LocalTime.ofInstant(startTime.toInstant(), ZoneId.systemDefault()));
         entry.setEndTime(LocalTime.ofInstant(endTime.toInstant(), ZoneId.systemDefault()));
-        entry.setEntryDate(LocalDate.ofInstant(entryDate.toInstant(), ZoneId.systemDefault()));
+        entry.setEntryDate(entryD);
         int min = entry.getEndTime().get(ChronoField.SECOND_OF_DAY) - entry.getStartTime().get(ChronoField.SECOND_OF_DAY);
         double hours = ((double) min / (double) 3600);
         double remainingVacation = cr.getRemainingVacation(getContract().getUuid());
-        if (hours > remainingVacation) {
+        if (hours > remainingVacation && entry.getReportType() == ReportType.VACATION) {
             errorString = "Vacation hours can not be more than " + (int) remainingVacation;
             return;
             
@@ -172,12 +180,26 @@ public class EditTimeEntry implements Serializable {
         try {
             context.getExternalContext().redirect("timesheet_list.xhtml?uuid=" + contract.getUuid());
         } catch (Exception e) {
-
+         
         }
 
+    }
+    public void delete(){
+        cr.deleteTimeSheetEntry(timeEntryUuid);
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            context.getExternalContext().redirect("timesheet_list.xhtml?uuid=" + getContract().getUuid());
+        } catch (Exception e) {
+               errorString = e.toString() + " error " + getContract().getUuid();
+        }
     }
 
     private Date dateFromTime(LocalTime time, LocalDate date) {
         return Date.from(time.atDate(date).atZone(ZoneId.systemDefault()).toInstant());
+    }
+    
+    public boolean isNewEntrey(){
+        
+        return "new".equals(timeEntryUuid);
     }
 }

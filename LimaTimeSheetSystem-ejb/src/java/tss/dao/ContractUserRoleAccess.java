@@ -10,6 +10,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import tss.entities.ContractEntity;
 import tss.entities.ContractUserRole;
 import tss.entities.PersonEntity;
 
@@ -19,32 +20,53 @@ import tss.entities.PersonEntity;
  */
 @Stateless
 @LocalBean
-public class ContractUserRoleAccess  extends BaseAccess {
-   
-    
-    public List<ContractUserRole> getAllContractUserRoleWith(PersonEntity p){
-       return em.createNamedQuery("getContractWithRole",ContractUserRole.class)
+public class ContractUserRoleAccess extends BaseAccess {
+
+    public List<ContractUserRole> getAllContractUserRoleWith(PersonEntity p) {
+        return em.createNamedQuery("getContractWithRole", ContractUserRole.class)
                 .setParameter("person", p).getResultList();
     }
-    
-    public List<ContractUserRole> getContractWithRole(PersonEntity p,String role){
-        return em.createNamedQuery("getContractWithSpecificRole",ContractUserRole.class)
+
+    public List<ContractUserRole> getContractWithRole(PersonEntity p, String role) {
+        return em.createNamedQuery("getContractWithSpecificRole", ContractUserRole.class)
                 .setParameter("person", p)
                 .setParameter("role", role)
                 .getResultList();
     }
-    
-    public ContractUserRole getEntityWithUuid(String uuid){
+
+    public ContractUserRole getEntityWithUuid(String uuid) {
         return em.createNamedQuery("getContractRoleWithUuid", ContractUserRole.class)
                 .setParameter("uuid", uuid)
                 .getSingleResult();
     }
     
-    public void remove(ContractUserRole er){
-        em.remove(er);
+    public ContractUserRole createNewContractUserRole(
+            ContractEntity contract,
+            PersonEntity person,
+            String role
+            ){
+        ContractUserRole c = new ContractUserRole(Boolean.TRUE);
+        c.setPerson(person);
+        person.getContractUserRoles().add(c);
+        c.setContract(contract);
+        contract.getContractUserRoles().add(c);
+        c.setRole(role);
+        em.persist(c);
+        return c;
+    
     }
-    public void save(ContractUserRole er){
+
+    public void remove(String er) {
+        ContractUserRole userRole = getEntityWithUuid(er);
+        userRole.getContract().getContractUserRoles().remove(userRole);
+        userRole.getPerson().getContractUserRoles().remove(userRole);
+        userRole.setContract(null);
+        userRole.setContract(null);
+        em.remove(userRole);
+    }
+
+    public void save(ContractUserRole er) {
         em.persist(er);
     }
-    
+
 }

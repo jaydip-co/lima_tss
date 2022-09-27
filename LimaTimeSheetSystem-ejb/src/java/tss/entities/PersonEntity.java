@@ -64,12 +64,14 @@ public class PersonEntity extends BaseEntity implements Serializable {
     @Column(unique = true)
     private String username;
 
-    @OneToMany(mappedBy = "person", cascade = {CascadeType.ALL},
+    @OneToMany(mappedBy = "person",
             fetch = FetchType.EAGER)
     private Set<ContractUserRole> contractUserRoles;
 
     @Column
     private String emailID;
+    
+    private boolean consent;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(
@@ -127,6 +129,16 @@ public class PersonEntity extends BaseEntity implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public boolean isConsent() {
+        return consent;
+    }
+
+    public void setConsent(boolean consent) {
+        this.consent = consent;
+    }
+    
+    
 
     public Set<ContractUserRole> getContractUserRoles() {
         return contractUserRoles;

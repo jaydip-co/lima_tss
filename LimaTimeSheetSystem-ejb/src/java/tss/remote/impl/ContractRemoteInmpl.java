@@ -9,6 +9,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -190,6 +191,18 @@ public class ContractRemoteInmpl implements ContractRemote {
         return u.getPersons().stream().map(this::createPersonDTO).collect(Collectors.toSet());
     }
 
+    @Override
+    public void storeUserData(Person p) {
+        PersonEntity pe = pa.getUserDataFromUsername(p.getUsername());
+        pe.setFirstName(p.getFirstName());
+        pe.setLastName(p.getLastName());
+        pe.setDob(p.getDob());
+        pe.setConsent(p.isConsent());
+        
+    }
+    
+    
+
     private Person createPersonDTO(PersonEntity p) {
         return Convertor.toPerson(p);
     }
@@ -213,6 +226,14 @@ public class ContractRemoteInmpl implements ContractRemote {
         }
         return Convertor.toPerson(user);
     }
+
+    @Override
+    public Person getUserDataByUserName(String username) {
+        PersonEntity user = pa.getUserDataFromUsername(username);
+        return Convertor.toPerson(user);
+    }
+    
+    
 
     @Override
     public List<Person> getAllUser(boolean isStaff) {
@@ -249,15 +270,13 @@ public class ContractRemoteInmpl implements ContractRemote {
         double v = c.getVacationHour();
         double vh = 0;
         Set<TimeSheetEntryEntity> entires = new HashSet<>();
-        for(TimeSheetEntity e : c.getTimeSheets()){
-            vh = vh +   e.getTimeSheetEntry().stream().filter(i -> i.getReportType() == ReportType.VACATION)
+        for (TimeSheetEntity e : c.getTimeSheets()) {
+            vh = vh + e.getTimeSheetEntry().stream().filter(i -> i.getReportType() == ReportType.VACATION)
                     .mapToDouble(TimeSheetEntryEntity::getHours)
-                    .reduce(0, (a,b) -> a+b);
+                    .reduce(0, (a, b) -> a + b);
         }
-       return v - vh;
+        return v - vh;
     }
-    
-    
 
     @Override
     public String storeContract(Contract c, Person employee,
@@ -297,34 +316,9 @@ public class ContractRemoteInmpl implements ContractRemote {
 
         PersonEntity pe = pa.getUserDataFromUuid(employee.getUuid());
         PersonEntity su = pa.getUserDataFromUuid(supervisor.getUuid());
-
-//        Set<ContractUserRole> us = new HashSet<>();
-//
-//        ContractUserRole newEmployee = new ContractUserRole();
-//        newEmployee.setContract(e);
-//        newEmployee.setRole(UserRoles.EMPLOYEE);
-//        newEmployee.setPerson(pe);
-//        e.getContractUserRoles().add(newEmployee);
-//        e.setContractUserRoles(us);
         Set<ContractUserRole> users = e.getContractUserRoles();
 
-//        for(ContractUserRole cr : users){
-//            cr.getPerson().getContractUserRoles().remove(cr);
-//            cr.setPerson(null);
-//            cr.getContract().getContractUserRoles().remove(cr);
-//            cr.setContract(null);
-////            cura.remove(cr);
-//        }
-//        ContractUserRole newEmployee = new ContractUserRole();
-//        newEmployee.setContract(e);
-//        newEmployee.setRole(UserRoles.EMPLOYEE);
-//        newEmployee.setPerson(pe);
-//        cura.save(newEmployee);
-//        pe.getContractUserRoles().add(newEmployee);
-//        e.getContractUserRoles().add(newEmployee);
-//        Set<ContractUserRole> secretary = new HashSet<>();
-//        Set<ContractUserRole> assistant = new HashSet<>();
-
+        Set<ContractUserRole> remo = new HashSet<>();
         for (ContractUserRole r : users) {
             switch (r.getRole()) {
                 case UserRoles.EMPLOYEE:
@@ -337,11 +331,31 @@ public class ContractRemoteInmpl implements ContractRemote {
                     r.setPerson(su);
                     su.getContractUserRoles().add(r);
                     break;
+                case UserRoles.SECRETARY:
+                    remo.add(r);
+                    break;
+                case UserRoles.ASSISTANT:
+                    remo.add(r);
+                    break;
                 default:
-                 
+
                     break;
             }
         }
+
+        remo.forEach(et -> cura.remove(et.getUuid()));
+        secretaries.forEach(s -> {
+            PersonEntity p = pa.getUserDataFromUuid(s.getUuid());
+
+            ContractUserRole cr = cura.createNewContractUserRole(e, p, UserRoles.SECRETARY);
+
+        });
+        assistants.forEach(as -> {
+            PersonEntity p = pa.getUserDataFromUuid(as.getUuid());
+
+            cura.createNewContractUserRole(e, p, UserRoles.ASSISTANT);
+        });
+
         return e.getUuid();
 
     }
@@ -369,7 +383,6 @@ public class ContractRemoteInmpl implements ContractRemote {
         contract.setStatus(ContractStatus.TERMINATED);
         tsa.deleteSheeetWith(contract, TimeSheetStatus.IN_PROGRESS);
     }
-    
 
     @Override
     public List<Contract> getAllContract() {
@@ -388,22 +401,32 @@ public class ContractRemoteInmpl implements ContractRemote {
         TimeSheetEntity time = tsa.getSheetEntityFor(timeSheetUuid);
         return Convertor.toContract(time.getParent(), currentUser);
     }
-    
-    
 
     @Override
     public List<Contract> getContractsWithRole(String[] roles) {
-
-        List<Contract> contracts = new ArrayList<>();
+        Set<Contract> contracts = new HashSet<>();
         for (String r : roles) {
             contracts.addAll(
                     cura.getContractWithRole(currentUser, r)
                             .stream()
+                            .filter(e->e.getContract().getStatus() != ContractStatus.ARCHIVED)
                             .map(e -> Convertor.toContract(e.getContract(), currentUser))
                             .collect(Collectors.toList()));
         }
-        return contracts;
+        return contracts.stream().sorted(Comparator.comparing(Contract::getStartDate)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Contract> getAllArchievedContract() {
+        return cura.getAllContractUserRoleWith(currentUser)
+                .stream().filter(e-> e.getContract().getStatus() == ContractStatus.ARCHIVED)
+                .map(e -> Convertor.toContract(e.getContract(), currentUser))
+                .collect(Collectors.toSet())
+                .stream().collect(Collectors.toList());
+        
+    }
+    
+    
 
     private Contract createDTO(ContractEntity ce) {
         return Convertor.toContract(ce, currentUser);
@@ -420,7 +443,7 @@ public class ContractRemoteInmpl implements ContractRemote {
                 .map(e -> Convertor.toTimeSheet(e))
                 .sorted((i1, i2) -> i2.getStartDate().isAfter(i1.getStartDate()) ? -1 : 1)
                 .collect(Collectors.toList());
-        
+
 //                tsa.getTimeShhetEntryWith(ce).stream()
 //                .map(e -> Convertor.toTimeSheet(e))
 //                .collect(Collectors.toSet());
@@ -428,6 +451,13 @@ public class ContractRemoteInmpl implements ContractRemote {
 //                .map(e -> Convertor.toTimeSheet(e))
 //                .collect(Collectors.toSet());
         return sheets;
+    }
+
+    @Override
+    public void deleteTimeSheetEntry(String entryUuid) {
+
+        tsa.deleteEntryWith(entryUuid);
+
     }
 
     @Override
@@ -455,8 +485,6 @@ public class ContractRemoteInmpl implements ContractRemote {
     public TimeSheet getTimeSheetWith(String timeSheetUuid) {
         return Convertor.toTimeSheet(tsa.getSheetEntityFor(timeSheetUuid));
     }
-    
-    
 
     @Override
     public String storeTimeEntry(TimeSheetEntry tse, String parentUuid) {
@@ -486,16 +514,15 @@ public class ContractRemoteInmpl implements ContractRemote {
     public boolean signSheet(String sheetUuid) {
         TimeSheetEntity sheet = tsa.getSheetEntityFor(sheetUuid);
         Contract c = Convertor.toContract(sheet.getParent(), currentUser);
-        if(c.getCurrentUserRole().equals(UserRoles.EMPLOYEE)){
-        sheet.setStatus(TimeSheetStatus.SIGNED_BY_EMPLOYEE);
-        sheet.setSignedByEmployee(LocalDate.now());
+        if (c.getCurrentUserRole().equals(UserRoles.EMPLOYEE)) {
+            sheet.setStatus(TimeSheetStatus.SIGNED_BY_EMPLOYEE);
+            sheet.setSignedByEmployee(LocalDate.now());
+        } else if (c.getCurrentUserRole().equals(UserRoles.SUPERVISOR)) {
+            sheet.setStatus(TimeSheetStatus.SIGNED_BY_SUPERVISOR);
+            sheet.setSignedBySupervisor(LocalDate.now());
+
         }
-        else if(c.getCurrentUserRole().equals(UserRoles.SUPERVISOR)){
-        sheet.setStatus(TimeSheetStatus.SIGNED_BY_SUPERVISOR);
-        sheet.setSignedBySupervisor(LocalDate.now());
-        
-        }
-        
+
         return true;
     }
 
@@ -514,21 +541,15 @@ public class ContractRemoteInmpl implements ContractRemote {
         checkForArchieveContract(sheetEntity.getParent().getUuid());
         return true;
     }
-    
-    private void checkForArchieveContract(String contractUuid){
+
+    private void checkForArchieveContract(String contractUuid) {
         ContractEntity contractEntity = ca.getContractEntityFromUUID(contractUuid);
         Set<TimeSheetEntity> sheets = contractEntity.getTimeSheets();
         if (sheets.stream().anyMatch((e) -> (e.getStatus() != TimeSheetStatus.ARCHIVED))) {
-            return ;
+            return;
         }
         contractEntity.setStatus(ContractStatus.ARCHIVED);
     }
-    
-    
-    
-    
-    
-    
 
     @Override
     public List<TimeSheetEntry> getAllEntryFor(String timeSheetUuid) {

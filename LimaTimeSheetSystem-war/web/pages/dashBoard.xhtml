@@ -12,9 +12,12 @@
     <ui:define name="content">
         #{loginBean.usetRole}
         #{loginBean.user}
+        <br/>
+        <h:link value="Edit" outcome="UserData"/>
 
         <ui:include src="../pages/contract/current_contract.xhtml"/>
-
+        
+       
 
         <b:container class="align-items-center">
             <h:form>
@@ -31,6 +34,9 @@
                                      searching="false"
                                      rendered="#{dashBoard.contractWithEmployee.size() > 0}"
                                      value="#{dashBoard.contractWithEmployee}" >
+                            <b:dataTableColumn label="#{msg.dbManagerTableno}" orderable="false">
+                                #{dashBoard.contractWithEmployee.indexOf(c) + 1}
+                            </b:dataTableColumn>
                             <b:dataTableColumn label="#{msg.dbDataTableColumnCN}" orderable="false">
                                 ${c.name}
                             </b:dataTableColumn>
@@ -79,7 +85,7 @@
                                      rendered="#{dashBoard.contractWithManager.size() > 0}"
                                      value="#{dashBoard.contractWithManager}">
                             <b:dataTableColumn label="#{msg.dbManagerTableno}" orderable="false">
-                                1
+                                #{dashBoard.contractWithManager.indexOf(c) + 1}
                             </b:dataTableColumn>
                             <b:dataTableColumn label="#{msg.dbManagerTableName}" orderable="false">
                                 #{c.name}
@@ -121,7 +127,8 @@
                     </b:container>
                     
                 </ui:fragment>
-                <ui:fragment rendered="#{loginBean.staff}" class="margin-5">
+                <br/>
+                 <ui:fragment rendered="#{loginBean.staff}" class="margin-5">
                         <b:button
                             offset="3"
                             look="info" icon="plus-sign"
@@ -132,6 +139,55 @@
                         </b:button>
                     </ui:fragment> 
                 <br/>
+                <br/>
+                <ui:fragment rendered="#{dashBoard.archievedContract.size() > 0}">
+                    <h:outputLabel value="#{msg.dashboardArchievedContract}" class="fa-2x"/>
+                    <br/>
+                    <b:container>
+                        <b:dataTable id="table3" striped="true" 
+                                     var="c"
+                                     searching="false"
+                                     class="fa-1x"
+                                     info="true"
+                                     rendered="#{dashBoard.archievedContract.size() > 0}"
+                                     value="#{dashBoard.archievedContract}">
+                            <b:dataTableColumn label="#{msg.dbManagerTableno}" orderable="false">
+                                #{dashBoard.archievedContract.indexOf(c) + 1}
+                            </b:dataTableColumn>
+                            <b:dataTableColumn label="#{msg.dbManagerTableName}" orderable="false">
+                                #{c.name}
+                            </b:dataTableColumn>
+                            <b:dataTableColumn label="#{msg.dbManagerTableYR}" orderable="false">
+                                #{c.currentUserRole}
+                            </b:dataTableColumn>
+                            
+                            <b:dataTableColumn label="#{msg.dbManagerTableDH}" orderable="false">
+                                #{c.hourDue}
+                            </b:dataTableColumn>
+                            <b:dataTableColumn label="#{msg.dbManagerTableActions}" orderable="false">
+                                <b:row class="fa-1x">
+                                    <b:column>
+                                        <h:link outcome="EditContract" rendered="${c.inPrepared()}">
+                                            <h:outputText value="#{msg.dbManagerTableEditBtn}" styleClass="fa-1x" />
+                                            <f:param name="uuid" value="#{c.uuid}"/>
+                                        </h:link>
+                                    </b:column>
+                                  
+                                    <b:column>
+                                        <h:link outcome="TimeSheetList" rendered="${!c.inPrepared()}">
+                                            <h:outputText value="#{msg.dbManagerTableSheetsBtn}" styleClass="fa-1x" />
+                                            <f:param name="uuid" value="#{c.uuid}"/>
+                                        </h:link>
+                                    </b:column>
+                                </b:row>
+                            </b:dataTableColumn>
+
+
+                        </b:dataTable>
+                    </b:container>
+                    
+                </ui:fragment>
+               
                 <br/>
                 <b:row>
                     
