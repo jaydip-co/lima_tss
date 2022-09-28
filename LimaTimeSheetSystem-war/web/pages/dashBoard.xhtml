@@ -54,8 +54,13 @@
                                  <h:link outcome="TimeSheetList" value="Entries">
                                     <f:param name="uuid" value="${c.uuid}"/>
                                 </h:link>
+                                <h:link outcome="Statistic" value="statistic">
+                                    <f:param name="uuid" value="${c.uuid}"/>
+                                </h:link>
+                              
                               
                             </b:dataTableColumn>
+                            
 
                         </b:dataTable>
                     </b:container>
@@ -118,6 +123,9 @@
                                             <h:outputText value="#{msg.dbManagerTableSheetsBtn}" styleClass="fa-1x" />
                                             <f:param name="uuid" value="#{c.uuid}"/>
                                         </h:link>
+                                        <h:link outcome="Statistic" value="statistic">
+                                    <f:param name="uuid" value="${c.uuid}"/>
+                                </h:link>
                                     </b:column>
                                 </b:row>
                             </b:dataTableColumn>

@@ -21,6 +21,10 @@
     <ui:define name="content">
         
             <b:form>
+                <h:link outcome="DashBoard">
+           
+             <b:button value="#{msg.tsListGBbtn}" icon="back"/>
+        </h:link>
                 <b:column>
 
                     <h:outputLabel value="#{editContract.contract.name}"
@@ -45,7 +49,7 @@
                                 <h:outputLabel value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="1-9-2022"/>
+                                <h:outputLabel value="#{editContract.contract.startDate}"/>
                             </b:column>
                         </b:row>
                         <b:row styleClass="show-grid">
@@ -56,7 +60,7 @@
                                 <h:outputLabel value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="30-9-2022"/>
+                                <h:outputLabel value="#{editContract.contract.endDate}"/>
                             </b:column>
                         </b:row>
                         <b:row styleClass="show-grid">
@@ -67,7 +71,48 @@
                                 <h:outputLabel value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="Employee Name"/>
+                                <h:outputLabel value="#{editContract.contract.employee.firstName}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Supervisor"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="#{editContract.contract.supervisor.firstName}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Assistant"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <ui:fragment rendered="#{editContract.contract.assistants.size() == 0}">
+                                      <h:outputLabel value="--"/>
+                                </ui:fragment>
+                                <ui:repeat value="#{editContract.contract.assistants}" var="c">
+                                    <h:outputLabel value="#{c.firstName}"/>
+                                </ui:repeat>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputLabel value="Secretary"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputLabel value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                               
+                                <ui:repeat value="#{editContract.contract.secretaries}" var="c">
+                                    <h:outputLabel value="#{c.firstName}"/>
+                                </ui:repeat>
                             </b:column>
                         </b:row>
                         <br/>

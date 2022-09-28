@@ -29,6 +29,7 @@ import tss.dao.PersonAccess;
 import tss.dao.TimeSheetAccess;
 import tss.dao.UserRoleAccess;
 import tss.dto.Contract;
+import tss.dto.ContractStatistic;
 import tss.dto.Convertor;
 import tss.dto.Person;
 import tss.dto.TimeSheet;
@@ -382,6 +383,7 @@ public class ContractRemoteInmpl implements ContractRemote {
         ContractEntity contract = ca.getContractEntityFromUUID(contractUuid);
         contract.setStatus(ContractStatus.TERMINATED);
         tsa.deleteSheeetWith(contract, TimeSheetStatus.IN_PROGRESS);
+        checkForArchieveContract(contractUuid);
     }
 
     @Override
@@ -401,6 +403,13 @@ public class ContractRemoteInmpl implements ContractRemote {
         TimeSheetEntity time = tsa.getSheetEntityFor(timeSheetUuid);
         return Convertor.toContract(time.getParent(), currentUser);
     }
+
+    @Override
+    public ContractStatistic getContractStatisctic(String contractUuid) {
+        ContractEntity c = ca.getContractEntityFromUUID(contractUuid);
+        return new ContractStatistic(Convertor.toContract(c, currentUser),100,50);
+    }
+    
 
     @Override
     public List<Contract> getContractsWithRole(String[] roles) {

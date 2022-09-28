@@ -79,6 +79,13 @@
             <to-view-id>/pages/manage_contract.xhtml</to-view-id>
             
         </navigation-case>
+         <navigation-case>
+            <from-outcome>Statistic</from-outcome>
+            <redirect>true</redirect>
+            <to-view-id>/pages/statistic.xhtml</to-view-id>
+            
+            
+        </navigation-case>
         
         <navigation-case>
             <from-outcome>TimeSheetList</from-outcome>

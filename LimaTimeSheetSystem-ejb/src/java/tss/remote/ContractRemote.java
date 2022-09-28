@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.Remote;
 import tss.dto.Contract;
+import tss.dto.ContractStatistic;
 import tss.dto.Person;
 import tss.dto.TimeSheet;
 import tss.dto.TimeSheetEntry;
@@ -62,6 +63,8 @@ public interface ContractRemote {
     public void terminateContract(String contractUuid);
     
     public Contract getContractWithTimeSheet(String timeSheetUuid);
+    
+    public ContractStatistic getContractStatisctic(String contractUuid);
 
     //////////// user Data /////////
     public Person getUserDataByUserName(String username, List<String> roles, boolean isStaff);
