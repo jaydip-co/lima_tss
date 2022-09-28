@@ -17,7 +17,7 @@
                          requiredMessage="UUID required"/>
         </f:metadata>
     </ui:define>
-    <ui:param name="pageHeadline" value="title"/>
+    <ui:param name="pageHeadline" value="#{msg.mcpTitletxt}"/>
     <ui:define name="content">
         
             <b:form>
@@ -28,7 +28,7 @@
                     <b:container class="mngtable" >
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="Status"/>
+                                <h:outputLabel value="#{msg.mcpStatusLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
                                 <h:outputLabel value=":"/>
@@ -39,7 +39,7 @@
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="Start Date"/>
+                                <h:outputLabel value="#{msg.mcpStartDateLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
                                 <h:outputLabel value=":"/>
@@ -50,7 +50,7 @@
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="End Date"/>
+                                <h:outputLabel value="#{msg.mcpEndDateLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
                                 <h:outputLabel value=":"/>
@@ -61,13 +61,13 @@
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="Employee"/>
+                                <h:outputLabel value="#{msg.mcpEmployeeLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
                                 <h:outputLabel value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="Employee Name"/>
+                                <h:outputLabel value="#{msg.mcpEmployeeNameLabel}"/>
                             </b:column>
                         </b:row>
                         <br/>
@@ -78,14 +78,14 @@
                                 <b:column span="2" class="col-2">
                                     <b:commandButton
                                         class="col-2 btn-success"
-                                        value="Start Contract"
+                                        value="#{msg.mcpStartContractBtn}"
                                         actionListener="#{editContract.startContract}"
                                         />
                                 </b:column>
                                 <b:column span="2" class="col-2">
                                     <b:commandButton
                                         class="col-2 btn-danger"
-                                        value="Delete"
+                                        value="#{msg.mcpDeletetBtn}"
                                         action="DashBoard"
                                         actionListener="#{editContract.deleteContract}"
                                         />
@@ -105,7 +105,7 @@
                                 <b:column span="2" class="col-2">
                                     <b:commandButton
                                         class="col-2 btn-danger"
-                                        value="Terminate"
+                                        value="#{msg.mcpTerminateBtn}"
                                         actionListener="#{editContract.terminate}"
                                         />
                                 </b:column>

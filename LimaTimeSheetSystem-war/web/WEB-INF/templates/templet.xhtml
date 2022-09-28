@@ -15,7 +15,7 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/> 
             <title>${title} </title>
-            
+
             <link rel="stylesheet" href="#{resource['css:all.css']}"/>
             <link rel="stylesheet" href="#{resource['css:tss.css']}"/>
             <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
@@ -24,15 +24,39 @@
             <ui:insert name="scripts"/>
         </h:head>
         <h:body id="body">
-           
+
             <b:container >
 
                 <br/>
                 <br/>
                 <ui:insert name="content" />
-            </b:container>
-            
                 
+                <section class="container1">
+                <div class="row1 footer1 ">
+
+                    <div class="left-section">
+                        <h5 class="footer-title">LIMA_TSS</h5>
+                        <p class="footer-txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure architecto accusamus expedita! Nostrum.</p>
+                    </div>
+
+                    <div class="right-section">
+                        <a class="logout-btn" href="javascript:;">Log Out</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="container1">
+                <div class="row1 footer1 copyright-txt">
+                    <div class="copyright1">
+                        <div class="year-txt">2021-2022 Copyright:
+                            <a class="tss-btn" href="index.html">TimeSheetSystem.com</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                
+            </b:container>
 
         </h:body>
     </f:view>

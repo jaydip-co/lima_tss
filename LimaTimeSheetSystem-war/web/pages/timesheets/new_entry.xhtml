@@ -20,7 +20,7 @@ and open the template in the editor.
         </f:metadata>
 
     </ui:define>
-    <ui:param name="pageHeadline" value="title"/>
+    <ui:param name="pageHeadline" value="#{msg.loginTitletxt}"/>
     <ui:define name = "scripts">
 
     </ui:define>
@@ -31,7 +31,7 @@ and open the template in the editor.
             </b:alert>
             <b:row>
                 <b:column span="4">
-                    <b:selectOneMenu label="Entry Type" 
+                    <b:selectOneMenu label="#{msg.loginEntryLabel}" 
                                      value="#{editTimeEntry.entry.reportType}" >
 
                         <f:selectItems value="#{editTimeEntry.reportTypes}" 
@@ -44,7 +44,7 @@ and open the template in the editor.
 
             <b:row>
                 <b:column span="4">
-                    <b:inputTextarea label="Description"
+                    <b:inputTextarea label="#{msg.loginDescriptionLabel}"
                                      value="#{editTimeEntry.entry.description}"/>
                 </b:column>
             </b:row>
@@ -55,7 +55,7 @@ and open the template in the editor.
                     <b:dateTimePicker id="d1" 
                                       value="#{editTimeEntry.startTime}"
                                       format="HH:mm"
-                                      label="Start Time"
+                                      label="#{msg.loginStartTimeLabel}"
                                       icon="time"
                                       required="true"
                                       />
@@ -66,7 +66,7 @@ and open the template in the editor.
 
                 <b:column span="4">
 
-                    <b:dateTimePicker id="d2" show-date="false" label="End Time"
+                    <b:dateTimePicker id="d2" show-date="false" label="#{msg.loginEndTimeLabel}"
                                       value="#{editTimeEntry.endTime}"
                                       format="HH:mm"
                                       icon="time"
@@ -81,7 +81,7 @@ and open the template in the editor.
                     <b:datepicker id="date" value="#{editTimeEntry.entryDate}"
                                   required="true"
 
-                                  label="Date"/>
+                                  label="#{msg.loginDateLabel}"/>
                 </b:column>
             </b:row>
            
@@ -89,13 +89,13 @@ and open the template in the editor.
           
             
             <b:commandButton actionListener="#{editTimeEntry.storeEntry}"
-                             value="store"  >
+                             value="#{msg.loginStoreCommandBtn}"  >
                         
                             </b:commandButton>
             <ui:fragment rendered="${!editTimeEntry.newEntrey}">
             <b:commandButton actionListener="#{editTimeEntry.delete}"
                              
-                             value="Delete b"/>
+                             value="#{msg.loginDeleteCommandBtn}"/>
             </ui:fragment>
         </b:form>
     </ui:define>
