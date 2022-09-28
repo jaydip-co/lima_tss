@@ -17,7 +17,7 @@
                          requiredMessage="UUID required"/>
         </f:metadata>
     </ui:define>
-    <ui:param name="title" value="Edit Contract"/>
+    <ui:param name="title" value="#{msg.editCPEditContractbtn}"/>
     <ui:define name = "scripts">
 
     </ui:define>
@@ -72,10 +72,10 @@
             </div>
 
             <div  class="col-3  form-group">
-                <b:inputText type="number" id="workingDayPerWeek" label="Working Days Per Week:" class="form-control" value="#{editContract.wdpw}"
+                <b:inputText type="number" id="workingDayPerWeek" label="#{msg.editCPWDPWtxt}" class="form-control" value="#{editContract.wdpw}"
                              required="true"
                              requiredMessage="#{msg.editContractRequired}"
-                             validatorMessage="Enter Valid Input">
+                             validatorMessage="#{msg.editCPEnterValidInputtxt}">
                     <f:validateRegex pattern="[\d ]+"/>
                 </b:inputText>
                 <b:message />
@@ -88,7 +88,7 @@
                              label="Vacation Days per Year:" class="form-control"
                              value="#{editContract.vdpy}"  required="true"
                              requiredMessage="#{msg.editContractRequired}"
-                             validatorMessage="Enter Valid Input">
+                             validatorMessage="#{msg.editCPEnterValidInputtxt}">
                     <f:validateRegex pattern="[\d ]+"/>
                 </b:inputText>
                 <b:message />
@@ -110,7 +110,7 @@
             </div>
 
             <div class="col-3 form-group">
-                <b:selectOneMenu value="#{editContract.employee}" label="Employee"  required="true"
+                <b:selectOneMenu value="#{editContract.employee}" label="#{msg.editCPEmployeeLabel}"  required="true"
                                  requiredMessage="#{msg.editContractRequired}"
                                  select2="true">
                     <f:selectItem itemLabel="(Please select)" itemValue="" />
@@ -121,7 +121,7 @@
                 <b:message />
             </div>
             <div class="col-3 form-group">
-                <b:selectOneMenu value="#{editContract.supervisor}" label="Supervisor"  required="true"
+                <b:selectOneMenu value="#{editContract.supervisor}" label="#{msg.editCPSupervisiorLabel}"  required="true"
                                  requiredMessage="#{msg.editContractRequired}"
                                  select2="true">
                     <f:selectItem itemLabel="(Please select)" itemValue="" />
@@ -133,7 +133,7 @@
             </div>
             <div class="col-3 form-group">
                 <b:selectMultiMenu value="#{editContract.secr}"
-                                   label="Secretary"  required="true"
+                                   label="#{msg.editCPSecretaryLabel}"  required="true"
                                    requiredMessage="#{msg.editContractRequired}"
                                    nonSelectedText="#{msg.editContractNotSelected}"
                                    
@@ -149,7 +149,7 @@
             <br/>
             <div class="col-3 form-group">
                 <b:selectMultiMenu value="#{editContract.assis}"
-                                   label="Assistant"
+                                   label="#{msg.editCPAssistantLabel}"
                                    nonSelectedText="#{msg.editContractNotSelected}"
                                    >
 
@@ -170,7 +170,7 @@
                 </b:column>
                 <b:column span="1">
                       <h:link outcome="DashBoard" >
-                <b:button class="btn-danger" value="Cancel">
+                          <b:button class="btn-danger" value="#{msg.editCPCancelbtn}">
 
                 </b:button>
             </h:link>
