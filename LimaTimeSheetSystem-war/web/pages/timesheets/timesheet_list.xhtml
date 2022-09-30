@@ -21,11 +21,13 @@
     </ui:define>
     <ui:param name="title" value="#{timeSheetBean.conract.name} - Time Sheet"/>
     <ui:define name="content">
-         <h:link outcome="DashBoard">
+        
+      
+             <h:link outcome="DashBoard">
            
              <b:button value="#{msg.tsListGBbtn}" icon="back"/>
+             <br/>
         </h:link>
-        <b:container>
             <br/>
             <h:outputLabel value="#{msg.tsListContractTxt} #{timeSheetBean.conract.name}" class="fa-1-5x"/>
             <br/>
@@ -37,7 +39,7 @@
                 
                 No Time sheets to show
             </b:container>
-            
+             <br/>
             <b:dataTable id="timesheets" striped=" true" 
                          var="c"
                          rendered="${timeSheetBean.timesheetAwailable}"
@@ -64,6 +66,6 @@
 
             </b:dataTable>
 
-        </b:container>
+       
     </ui:define>
 </ui:composition>

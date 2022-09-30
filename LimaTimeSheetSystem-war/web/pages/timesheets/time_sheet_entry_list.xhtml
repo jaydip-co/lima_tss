@@ -31,18 +31,20 @@
             <b:button value="#{msg.tselGBbtn}" icon="back"/>
         </h:link>
         <br/>
+        <br/>
         <h:outputLabel class="fa-2x" value="#{msg.tselContractTxt} #{timeSheetEntryBean.contract.name}" />
         <br/>
         <h:outputLabel class="fa-1-5x" value="${timeSheetEntryBean.timeSheet.startDate} - ${timeSheetEntryBean.timeSheet.endDate}"/>
         <br/>
-        <h:outputText value="#{msg.tselTotalTxt} ${timeSheetEntryBean.timeSheet.hoursDue} hours" />
+        <h:outputText value="#{msg.tselTotalTxt} #{timeSheetEntryBean.timeSheet.hoursDue} hours" />
         <br/>
-        <h:outputText value="#{msg.tselRemainingTxt} ${timeSheetEntryBean.timeSheet.hoursDue - timeSheetEntryBean.timeSheet.workHours} hours" />
+        <h:outputText value="#{msg.tselRemainingTxt} #{timeSheetEntryBean.timeSheet.hoursDue - timeSheetEntryBean.timeSheet.workHours} hours" />
         <br/>
         <h:outputText value="#{msg.tselStatusTxt} #{timeSheetEntryBean.timeSheet.status}"/>
         <br/>
         <br/>
-        <b:container style="text-align: center" class="col-12" rendered="#{timeSheetEntryBean.allTimeShhetEntry.size() == 0}">
+        <b:container style="text-align: center; margin: 30px 10px 30px 10px;"
+                     class="containerNoData-p col-12" rendered="#{timeSheetEntryBean.allTimeShhetEntry.size() == 0}">
 
             <p>
                 #{msg.tselDisplayText}
@@ -60,7 +62,7 @@
                 value="#{msg.tselAddNewEntrybtn}"
                 outcome="NewEntry"
                 >
-                <f:param name="uuid" value="#{msg.tselNewTxt}"/>
+                <f:param name="uuid" value="new"/>
                 <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
             </b:button>
 

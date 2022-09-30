@@ -12,8 +12,7 @@ and open the template in the editor.
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <b:container >
-
+   
         <b:dataTable id="currentTimeSheet" striped="true" 
                      var="c"
                      searching="false" 
@@ -56,21 +55,8 @@ and open the template in the editor.
 
 
         </b:dataTable>
-        <ui:fragment rendered="${timeSheetEntryBean.timeSheet.inProgress
-                                 &amp;&amp; timeSheetEntryBean.employee}">
-            <b:button
-                offset="9"
-                span="3" look="info"
-                icon="plus-sign"
-                value="#{msg.ctslDataTableCAddNewEntrybtn}"
-                outcome="NewEntry"
-                >
-                <f:param name="uuid" value="new"/>
-                <f:param name="parentUuid" value="#{timeSheetEntryBean.uuid}"/>
-            </b:button>
 
-        </ui:fragment>
        
-    </b:container>
+   
 
 </ui:composition>

@@ -5,10 +5,15 @@
  */
 package tss.rest;
 
+import java.io.File;
+import tss.dto.Contract;
+
 /**
  *
  * @author savaliya
  */
 public class PdgGenerator {
-    
+    public static void generatePdf(Contract c,File f){
+        
+    }
 }

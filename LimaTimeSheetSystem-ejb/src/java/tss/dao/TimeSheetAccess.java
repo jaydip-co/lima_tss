@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import tss.TimeSeet;
 import tss.entities.ContractEntity;
 import tss.entities.TimeSheetEntity;
 import tss.entities.TimeSheetEntryEntity;
@@ -43,22 +44,22 @@ public class TimeSheetAccess extends BaseAccess {
                 .setParameter("uuid", sheetUuid)
                 .getSingleResult();
     }
-    
-    
-    public TimeSheetEntryEntity storeEntry(LocalTime startTime,LocalTime endTime){
+
+    public TimeSheetEntryEntity storeEntry(LocalTime startTime, LocalTime endTime) {
         TimeSheetEntryEntity tsee = new TimeSheetEntryEntity(true);
         tsee.setStartTime(startTime);
         tsee.setEndTime(endTime);
         em.persist(tsee);
         return tsee;
     }
+
     public TimeSheetEntryEntity storeTimeEntry(
             ReportType reportType,
             LocalTime startTime,
             LocalTime endTime,
             String desciption,
             LocalDate entryDate
-            ){
+    ) {
         TimeSheetEntryEntity tsee = new TimeSheetEntryEntity(true);
         tsee.setReportType(reportType);
         tsee.setStartTime(startTime);
@@ -68,38 +69,44 @@ public class TimeSheetAccess extends BaseAccess {
         em.persist(tsee);
         return tsee;
     }
-   
-    
-    public List<TimeSheetEntryEntity> getAllEntryFor(TimeSheetEntity tsee){
-        return em.createNamedQuery("getTimeEntryForParent",TimeSheetEntryEntity.class)
+
+    public List<TimeSheetEntryEntity> getAllEntryFor(TimeSheetEntity tsee) {
+        return em.createNamedQuery("getTimeEntryForParent", TimeSheetEntryEntity.class)
                 .setParameter("parent", tsee).getResultList();
     }
-    
-    public TimeSheetEntryEntity getTimeEntryWith(String uuid){
+
+    public TimeSheetEntryEntity getTimeEntryWith(String uuid) {
         return em.createNamedQuery("getTimeEntryWithUuid", TimeSheetEntryEntity.class)
                 .setParameter("uuid", uuid)
                 .getSingleResult();
     }
-    
-    public boolean deleteSheeetWith(ContractEntity c,TimeSheetStatus status){
+
+    public boolean deleteSheeetWith(ContractEntity c, TimeSheetStatus status) {
         List<TimeSheetEntity> entries = em.createNamedQuery("getTimeSheetWithStatus", TimeSheetEntity.class)
                 .setParameter("status", status)
                 .setParameter("contract", c)
                 .getResultList();
-        for(TimeSheetEntity e : entries){
+        for (TimeSheetEntity e : entries) {
             e.getParent().getTimeSheets().remove(e);
             e.setParent(null);
             em.remove(e);
         }
         return true;
     }
-    
-    public boolean  deleteEntryWith(String entryUuid){
+
+    public boolean deleteEntryWith(String entryUuid) {
         TimeSheetEntryEntity entry = getTimeEntryWith(entryUuid);
         entry.getParent().getTimeSheetEntry().remove(entry);
         entry.setParent(null);
         em.remove(entry);
         return true;
     }
-    
+
+    public List<TimeSheetEntity> getAllPendingEntry() {
+        return em.createNamedQuery("getPendingSheet", TimeSheetEntity.class)
+                .setParameter("status", TimeSheetStatus.IN_PROGRESS)
+                .setParameter("end", LocalDate.now())
+                .getResultList();
+    }
+
 }

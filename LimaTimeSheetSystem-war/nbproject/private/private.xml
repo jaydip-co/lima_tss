@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
             <url>web/pages/user/userList.xhtml</url>
             <bookmark id="1">
@@ -9,36 +9,38 @@
                 <key/>
             </bookmark>
         </file>
+        <file>
+            <url>web/resources/css/tss.css</url>
+            <bookmark id="2">
+                <name/>
+                <line>157</line>
+                <key/>
+            </bookmark>
+        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/ContractBean.java</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/EditContract.java</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/dashBoard.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/templates/templet.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/contract/current_contract.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/templates/temp.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/faces-config.xml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/lcl/message.properties</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/welcome.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/timesheets/timesheet_list.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/resources/css/tss.css</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/timesheets/new_entry.xhtml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/payara-web.xml</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/templates/page-templet.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/home.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/contract/contract.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/contract/edit.xhtml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/contract/manage_contract.xhtml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/EditContract.java</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/statistic.xhtml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/dashBoard.xhtml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/user/user_data.xhtml</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/timesheets/current_time_sheet_list.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/manage_contract.xhtml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/templates/templet.xhtml</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/timesheets/time_sheet_entry_list.xhtml</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/LoginBean.java</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/login.xhtml</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/TimeSheetEntryBean.java</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/contract/edit_contract.xhtml</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/auth/login.xhtml</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/lcl/Message.java</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/lcl/message.properties</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/WEB-INF/faces-config.xml</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/resources/css/tss.css</file>
             <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/src/java/tss/EditTimeEntry.java</file>
-            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/resources/css/all.css</file>
+            <file>file:/D:/Study/Semester%201/Java/project/test/lima_tss/LimaTimeSheetSystem-war/web/pages/timesheets/timesheet_list.xhtml</file>
         </group>
     </open-files>
 </project-private>

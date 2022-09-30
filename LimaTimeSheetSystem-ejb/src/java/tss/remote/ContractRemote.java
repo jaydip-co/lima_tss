@@ -99,5 +99,7 @@ public interface ContractRemote {
     public boolean archieveSheet(String sheetUuid);
     
     public double getRemainingVacation(String contractUuid);
+    
+    public List<TimeSheetEntity> getPendingTimeSheet();
 
 }

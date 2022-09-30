@@ -25,6 +25,11 @@ and open the template in the editor.
 
     </ui:define>
     <ui:define name="content">
+        <h:link outcome="TimeSheetList">
+            <f:param name="uuid" value="#{editTimeEntry.contract.uuid}"/>
+             <b:button value="#{msg.tsListGBbtn}" icon="back"/>
+        </h:link>
+        <br/>
         <b:form>
             <b:alert severity="danger" rendered="${editTimeEntry.isValidationError()}">
                 ${editTimeEntry.errorString}
@@ -80,23 +85,25 @@ and open the template in the editor.
 
                     <b:datepicker id="date" value="#{editTimeEntry.entryDate}"
                                   required="true"
-
                                   label="#{msg.loginDateLabel}"/>
                 </b:column>
             </b:row>
-           
-            
-          
-            
-            <b:commandButton actionListener="#{editTimeEntry.storeEntry}"
-                             value="#{msg.loginStoreCommandBtn}"  >
-                        
-                            </b:commandButton>
-            <ui:fragment rendered="${!editTimeEntry.newEntrey}">
-            <b:commandButton actionListener="#{editTimeEntry.delete}"
-                             
-                             value="#{msg.loginDeleteCommandBtn}"/>
-            </ui:fragment>
+
+
+
+            <b:row>
+                <b:column span="1">
+                <b:commandButton  actionListener="#{editTimeEntry.storeEntry}"
+                                 value="#{msg.loginStoreCommandBtn}"  >
+
+                </b:commandButton>
+                    </b:column>
+                <ui:fragment rendered="${!editTimeEntry.newEntrey}">
+                    <b:commandButton actionListener="#{editTimeEntry.delete}"
+
+                                     value="#{msg.loginDeleteCommandBtn}"/>
+                </ui:fragment>
+            </b:row>
         </b:form>
     </ui:define>
 </ui:composition>

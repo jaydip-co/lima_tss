@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import tss.dto.Contract;
 import tss.dto.ContractStatistic;
 import tss.remote.ContractRemote;
 
@@ -48,6 +49,10 @@ public class StatisticBean implements Serializable{
         this.statistic = statistic;
     }
     
+    public Contract getContract(){
+        return cr.getContractWithUuid(contractUuid);
+    }
+    
     
     
     public String getTotalHoursChartData(){
@@ -58,23 +63,33 @@ public class StatisticBean implements Serializable{
         sb.append("Worked Hours");
         sb.append("'");
         sb.append(",");
-        sb.append(50);
+        sb.append(getStatistic().getWorkedHours());
         sb.append("]");
         sb.append(",");
         sb.append("[");
         sb.append("'");
-        sb.append("nothing");
+        sb.append("Vacation Hours");
         sb.append("'");
         sb.append(",");
-        sb.append(10);
+        sb.append(getStatistic().getVacationHours());
         sb.append("]");
         sb.append(",");
         sb.append("[");
         sb.append("'");
-        sb.append("something");
+        sb.append("Seek Leave");
         sb.append("'");
         sb.append(",");
-        sb.append(30);
+        sb.append(getStatistic().getSeekLeaveHours());
+        
+        sb.append("]");
+        sb.append(",");
+        sb.append("[");
+        sb.append("'");
+        sb.append("Remaining Hours");
+        sb.append("'");
+        sb.append(",");
+        sb.append(getStatistic().getRemainingHours());
+        
         sb.append("]");
         
         
@@ -82,4 +97,25 @@ public class StatisticBean implements Serializable{
         return sb.toString();
     }
     
+    public String getVacationHoursData(){
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("[");
+        sb.append("'");
+        sb.append("Vacation Hours");
+        sb.append("'");
+        sb.append(",");
+        sb.append(getStatistic().getVacationHours());
+        sb.append("]");
+        sb.append(",");
+         sb.append("[");
+        sb.append("'");
+        sb.append("Remainng");
+        sb.append("'");
+        sb.append(",");
+        sb.append(getStatistic().getTotalVacationHours());
+        sb.append("]");
+        
+        return sb.toString();
+    }
 }

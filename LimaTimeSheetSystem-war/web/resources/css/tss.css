@@ -13,7 +13,7 @@ and open the template in the editor.
     margin-left: 2px;
     padding: 10px;
     width: inherit
-    /*background-color: #ccffff;*/
+/*background-color: #ccffff;*/
     
 }
 
@@ -118,6 +118,13 @@ body{
 	
 	margin: 0 auto;
 }
+.containerNoData-p{
+    text-align: center;
+    margin: 10px 30px 10px 30px;
+}
+.containerNoMargin{
+    margin: 0px;
+}
 
 .row1{
 	display: flex;
@@ -126,16 +133,16 @@ body{
 }
 
 .footer1{
-	background-color: #e6f0ff;
+	background-color: #f6fbfd;
 	border-bottom: 2px solid #000;
 }
 
-.col{.
+.col{
 	justify-content: space-around;
 }
 
 .left-section{
-	max-width: 200px;
+	max-width: 60%;
 	padding: 15px;
 }
 
@@ -145,10 +152,10 @@ body{
 }
 
 .logout-btn{
-	padding: 15px;
-	border: 1px solid #0052cc;
+	padding: 8px 25px 8px 25px;
+        border: 0px solid black;
 	border-radius: 5px;
-	background-color: #66a3ff;
+	background-color: #31B0D5;
 	text-decoration: none;
 	color: #fff;
 	font-weight: bolder;
@@ -157,12 +164,13 @@ body{
 .footer-title{
 	margin: 0px;
 	margin-bottom: 15px;
-	font-size: 25px;
+	font-size: 1.5em;
+        font-weight: 600
 }
 
 .footer-txt{
 	margin: 0px;
-	font-size: 18px;
+	font-size: 1em;
 }
 
 .copyright1{
@@ -175,4 +183,10 @@ body{
 
 .tss-btn{
 	text-decoration: none;
+}
+
+
+.f-1{
+    font-size: 1em;
+    font-weight: 100;
 }

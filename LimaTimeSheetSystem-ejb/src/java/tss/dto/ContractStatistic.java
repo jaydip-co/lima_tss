@@ -15,9 +15,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ContractStatistic {
     private Contract contract;
     
-    private double totalHours;
+    private double totalDueHour;
+    
+    private double vacationHours;
+    
+    private double seekLeaveHours;
     
     private double workedHours;
+    
+    private double remainingHours;
+    
+    private double totalVacationHours;
+
+    public ContractStatistic(Contract contract, double totalDueHour, double vacationHours, double seekLeaveHours, double workedHours, double totalVacationHours) {
+        this.contract = contract;
+        this.totalDueHour = totalDueHour;
+        this.vacationHours = vacationHours;
+        this.seekLeaveHours = seekLeaveHours;
+        this.workedHours = workedHours;
+        this.totalVacationHours = totalVacationHours;
+        
+        remainingHours = Math.max(0, totalDueHour - (vacationHours + seekLeaveHours + workedHours));
+    }
 
     public Contract getContract() {
         return contract;
@@ -27,12 +46,28 @@ public class ContractStatistic {
         this.contract = contract;
     }
 
-    public double getTotalHours() {
-        return totalHours;
+    public double getTotalDueHour() {
+        return totalDueHour;
     }
 
-    public void setTotalHours(double totalHours) {
-        this.totalHours = totalHours;
+    public void setTotalDueHour(double totalDueHour) {
+        this.totalDueHour = totalDueHour;
+    }
+
+    public double getVacationHours() {
+        return vacationHours;
+    }
+
+    public void setVacationHours(double vacationHours) {
+        this.vacationHours = vacationHours;
+    }
+
+    public double getSeekLeaveHours() {
+        return seekLeaveHours;
+    }
+
+    public void setSeekLeaveHours(double seekLeaveHours) {
+        this.seekLeaveHours = seekLeaveHours;
     }
 
     public double getWorkedHours() {
@@ -42,14 +77,24 @@ public class ContractStatistic {
     public void setWorkedHours(double workedHours) {
         this.workedHours = workedHours;
     }
-    
-    
 
-    public ContractStatistic(Contract contract, double totalHours, double workedHours) {
-        this.contract = contract;
-        this.totalHours = totalHours;
-        this.workedHours = workedHours;
+    public double getRemainingHours() {
+        return remainingHours;
     }
+
+    public void setRemainingHours(double remainingHours) {
+        this.remainingHours = remainingHours;
+    }
+
+    public double getTotalVacationHours() {
+        return totalVacationHours;
+    }
+
+    public void setTotalVacationHours(double totalVacationHours) {
+        this.totalVacationHours = totalVacationHours;
+    }
+    
+    
     
     
 }

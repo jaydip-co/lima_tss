@@ -25,38 +25,65 @@
         </h:head>
         <h:body id="body">
 
-            <b:container >
 
-                <br/>
-                <br/>
+
+            <br/>
+            <br/>
+            <b:container>
+
                 <ui:insert name="content" />
-                
-                <section class="container1">
-                <div class="row1 footer1 ">
 
-                    <div class="left-section">
-                        <h5 class="footer-title">LIMA_TSS</h5>
-                        <p class="footer-txt">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure architecto accusamus expedita! Nostrum.</p>
-                    </div>
+                <ui:fragment rendered="#{loginBean.loggedIn}">
+                    <b:well style="background-color: #f6fbfd; margin-top: 30px; " >
+                        <h:form>
+                            <section class="container1">
+                                <div class="row1 footer1 ">
 
-                    <div class="right-section">
-                        <a class="logout-btn" href="javascript:;">Log Out</a>
-                    </div>
+                                    <div class="left-section">
+                                        <h5 class="footer-title fa-1x">#{msg.footerAppTitle}</h5>
+                                        #{loginBean.currentUser.username}  <h:link class="f-1" value="Edit" outcome="UserData"/>
+                                       <br/>
+                                        #{loginBean.currentUser.firstName} #{loginBean.currentUser.lastName}
+                                        <br/>
+                                        User Local - #{lc.userLocale}
+                                        
+                                        <b:commandButton value="English" actionListener="#{lc.selectEnglish()}"/> - 
+                                        <b:commandButton value="German" actionListener="#{lc.selectGerman()}"/>
 
-                </div>
-            </section>
+                                    </div>
+                                    
+                                    
 
-            <section class="container1">
-                <div class="row1 footer1 copyright-txt">
-                    <div class="copyright1">
-                        <div class="year-txt">2021-2022 Copyright:
-                            <a class="tss-btn" href="index.html">TimeSheetSystem.com</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-                
-            </b:container>
+                                    <div class="right-section">
+
+                                        <h:commandButton class="logout-btn" 
+                                                         value="#{msg.dbLogOutbtn}" 
+                                                         action="Welcome"
+                                                         actionListener="#{loginBean.logout}">
+                                        </h:commandButton>
+
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row1 footer1 copyright-txt">
+                                    <div class="copyright1">
+                                        <div class="year-txt">2021-2022 Copyright:
+                                            <a class="tss-btn" href="welcome.xhtml">TimeSheetSystem.com</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </h:form>
+                    </b:well>
+
+                </ui:fragment>
+            </b:container>    
+
+
+
 
         </h:body>
     </f:view>
