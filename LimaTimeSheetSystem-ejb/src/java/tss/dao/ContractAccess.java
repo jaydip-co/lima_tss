@@ -11,7 +11,7 @@ import java.util.Set;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
-import tss.UserRoles;
+import tss.enums.UserRoles;
 import tss.dto.Contract;
 import tss.entities.ContractEntity;
 import tss.entities.ContractUserRole;

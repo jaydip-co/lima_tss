@@ -54,10 +54,12 @@
                         <h:link outcome="TimeSheetList" value="Entries">
                             <f:param name="uuid" value="${c.uuid}"/>
                         </h:link>
+                        <ui:fragment rendered="${!c.inPrepared()}">
                         <br/>
                         <h:link outcome="Statistic" value="statistic">
                             <f:param name="uuid" value="${c.uuid}"/>
                         </h:link>
+                        </ui:fragment>
 
 
                     </b:dataTableColumn>

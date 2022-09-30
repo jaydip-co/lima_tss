@@ -24,7 +24,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import tss.UserRoles;
+import tss.enums.UserRoles;
 
 import tss.dao.TimeSheetAccess;
 import tss.entities.PersonEntity;
@@ -44,7 +44,7 @@ public class TssTaskScheduler {
     @EJB
     TimeSheetAccess tsa;
 
-    @Resource(lookup = "mail/contacts-mail")
+    @Resource(lookup = "mail/lima-tss-main")
     private Session mailSession;
 
     @PostConstruct
@@ -66,49 +66,47 @@ public class TssTaskScheduler {
                 Set<TimeSheetEntity> times = new HashSet<>();
                 times.add(e);
                 m.put(pe, times);
-            }
-            else{
+            } else {
                 Set<TimeSheetEntity> times = m.get(pe);
                 times.add(e);
                 m.put(pe, times);
             }
         });
 
-       
-            m.keySet().forEach(e -> {
-                try {
-                    Message msg = new MimeMessage(mailSession);
-                    msg.setSubject("Reminders for Time Sheet");
-                    msg.setSentDate(new Date());
-                    msg.setFrom(InternetAddress.parse(
-                            "nobody@tss.com",
-                            false)[0]);
-                    msg.setRecipients(
-                            Message.RecipientType.TO,
-                            InternetAddress.parse(
-                                    e.getUserName(),
-                                    false)
-                    );
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("You have Pending sign in Folowing contract :-");
+        m.keySet().forEach(e -> {
+            try {
+                Message msg = new MimeMessage(mailSession);
+                msg.setSubject("Reminders for Time Sheet");
+                msg.setSentDate(new Date());
+                msg.setFrom(InternetAddress.parse(
+                        "nobody@tss.com",
+                        false)[0]);
+                msg.setRecipients(
+                        Message.RecipientType.TO,
+                        InternetAddress.parse(
+                                e.getUserName(),
+                                false)
+                );
+                StringBuilder sb = new StringBuilder();
+                sb.append("You have Pending sign in Folowing contract :-");
+                sb.append("\n");
+                m.get(e).forEach(et -> {
+                    sb.append(et.getParent().getContractName());
+                    sb.append(":- ");
+                    sb.append(et.getStartDate());
+                    sb.append("-");
+                    sb.append(et.getEndDate());
                     sb.append("\n");
-                    m.get(e).forEach(et -> {
-                        sb.append(et.getParent().getContractName());
-                        sb.append(":- ");
-                        sb.append(et.getStartDate());
-                        sb.append("-");
-                        sb.append(et.getEndDate());
-                        sb.append("\n");
-                    });
-                    msg.setText(sb.toString());
-                    Transport.send(msg);
-                } catch (MessagingException ex) {
-                    Logger.getLogger(TssTaskScheduler.class.getEnclosingClass())
-                            .log(Level.SEVERE, null, ex);
-                }
-            });
-            
-          Logger.getLogger("tss", TssTaskScheduler.class)
+                });
+                msg.setText(sb.toString());
+                Transport.send(msg);
+            } catch (MessagingException ex) {
+                Logger.getLogger(TssTaskScheduler.class.getEnclosingClass())
+                        .log(Level.SEVERE, null, ex);
+            }
+        });
+
+        Logger.getLogger("tss", TssTaskScheduler.class)
                 .log(Level.SEVERE, "Remainder sent successfully");
     }
 }

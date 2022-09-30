@@ -24,7 +24,7 @@ import tss.entities.UserRoleEntity;
 @Remote
 public interface ContractRemote {
 
-    public void setContract();
+ 
 
     public List<Contract> getAllContract();
 
@@ -97,6 +97,5 @@ public interface ContractRemote {
     
     public double getRemainingVacation(String contractUuid);
     
-    public List<TimeSheetEntity> getPendingTimeSheet();
-
+   
 }

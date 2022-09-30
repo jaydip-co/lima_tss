@@ -20,7 +20,7 @@
     <ui:define name="content">
 
         <div class ="row d-flex justify-content-center align-items-center h-100">
-            <h3>#{msg.footerAppTitle}</h3>
+            <h:outputLabel value="#{msg.footerAppTitle}" class="fa-2x"/>
         </div>
         <form class="form form-horizontal" role="form" method="post" action="j_security_check" name="loginForm">
             <div class="container py-5 h-100">
@@ -33,43 +33,36 @@
                                         <input type="email" class="form-control" 
 
                                                id="username" placeholder="username"
-                                               value ="staff_member1@tss.com"
+                                              
                                                name="j_username" autocomplete="off"/>
                                     </div>
                                     <div class="form-outline form-white mb-4 fa-2x">
                                         <input type="password" class="form-control" 
                                                id="password" placeholder="password"
-                                               align="center" value ="x"
+                                               align="center"
                                                name="j_password" autocomplete="off"/>
                                     </div>
 
-                                    <button class="btn btn-success btn-lg px-5" type="submit">#{msg.loginButtonLabel}</button>
+                                    <button class="btn btn-success btn-lg px-5" type="submit">#{msg.loginLoginbtn}</button>
                                 </div>
                                 <div>
-                                    <h:form>
-                                        <h:commandButton class="text-white-50 fw-bold fa-1x"
-                                                       actionListener="#{lc.selectEnglish}"
-                                                       value="#{msg.loginEnglishLanbtn}"/> -
-                                        <h:commandButton class="text-white-50 fw-bold fa-1x"
-                                                       actionListener="#{lc.selectGerman}"
-                                                       value="#{msg.loginGermanLanbtn}"/>
-                                    </h:form>
+                                   
 
                                 </div>
                             </div>
+                            
                         </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <b:alert severity="danger" rendered="${request.parameterMap.containsKey('j_username')}">
+                        <br/>
+                        <b:alert severity="danger" rendered="${request.parameterMap.containsKey('j_username')}">
             #{msg.loginAleartText}
         </b:alert>
-        <h:form>
-            <h:commandButton immediate="true"
-                             actionListener="#{contractBean.addDemoData}"
-                             value="add"/>
-        </h:form>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+        
+        
 
     </ui:define>
 </ui:composition>

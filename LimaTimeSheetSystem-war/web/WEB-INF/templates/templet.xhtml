@@ -42,14 +42,20 @@
 
                                     <div class="left-section">
                                         <h5 class="footer-title fa-1x">#{msg.footerAppTitle}</h5>
-                                        #{loginBean.currentUser.username}  <h:link class="f-1" value="Edit" outcome="UserData"/>
+                                        #{loginBean.currentUser.username}
+                                        <ui:fragment rendered="#{loginBean.staff}">
+                                            (Staff member)
+                                        </ui:fragment> <h:link class="f-1" value="Edit" outcome="UserData"/>
                                        <br/>
                                         #{loginBean.currentUser.firstName} #{loginBean.currentUser.lastName}
                                         <br/>
-                                        User Local - #{lc.userLocale}
+                                       
+                                         User Local - #{lc.userLocale}<br/>
                                         
                                         <b:commandButton value="English" actionListener="#{lc.selectEnglish()}"/> - 
-                                        <b:commandButton value="German" actionListener="#{lc.selectGerman()}"/>
+                                        <b:commandButton value="German" actionListener="#{lc.selectGerman()}"/> <br/>
+                                        
+                                       
 
                                     </div>
                                     

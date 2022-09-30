@@ -8,7 +8,7 @@ package tss.dto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import tss.UserRoles;
+import tss.enums.UserRoles;
 import tss.entities.ContractEntity;
 import tss.entities.ContractUserRole;
 import tss.entities.PersonEntity;

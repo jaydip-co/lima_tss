@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tss;
+package tss.web;
 
+import tss.enums.UserRoles;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -335,6 +336,7 @@ public class EditContract implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             String absoluteWebPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
             context.getExternalContext().redirect(absoluteWebPath + "/rest/contracts/list?id=9b72ae70-d94a-4808-a3cf-95682b719ff2");
+            
         } catch (IOException e) {
             System.err.println(e.toString());
         }

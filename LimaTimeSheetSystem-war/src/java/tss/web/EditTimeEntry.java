@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tss;
+package tss.web;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -155,7 +155,7 @@ public class EditTimeEntry implements Serializable {
         LocalDate entryD = LocalDate.ofInstant(entryDate.toInstant(), ZoneId.systemDefault());
         TimeSheet ts = cr.getTimeSheetWith(parrentUuid);
         if(!(entryD.equals(ts.getStartDate()) || entryD.equals(ts.getEndDate()) || 
-                (entryD.isAfter(ts.getStartDate()) && entryD.equals(ts.getEndDate())))){
+                (entryD.isAfter(ts.getStartDate()) && entryD.isBefore(ts.getEndDate())))){
             errorString = "Entry date should be between sheet period";
             return;
         }

@@ -7,7 +7,6 @@ package tss.remote.impl;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -16,13 +15,14 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-import tss.TimeSeet;
-import tss.UserRoles;
+
+import tss.enums.UserRoles;
 import tss.dao.ContractAccess;
 import tss.dao.ContractUserRoleAccess;
 import tss.dao.PersonAccess;
@@ -54,8 +54,9 @@ import tss.remote.ContractRemote;
 @Stateless
 public class ContractRemoteInmpl implements ContractRemote {
 
-    @EJB
-    TimeSeet ts;
+    public static final String STUDENT = "STUDENT";
+
+    public static final String STAFF_MEMBER = "STAFFMEMBER";
 
     @Resource
     EJBContext ejbContext;
@@ -79,11 +80,6 @@ public class ContractRemoteInmpl implements ContractRemote {
 
     private PersonEntity currentUser;
 
-    @Override
-    public void setContract() {
-        ts.setContract();
-    }
-
     @AroundInvoke
     private Object getCaller(InvocationContext ctx) throws Exception {
         Principal p = ejbContext.getCallerPrincipal();
@@ -97,14 +93,6 @@ public class ContractRemoteInmpl implements ContractRemote {
     public Person getUserData() {
         /// TODO : - implement get user data
         return new Person();
-    }
-
-    public TimeSeet getTs() {
-        return ts;
-    }
-
-    public void setTs(TimeSeet ts) {
-        this.ts = ts;
     }
 
     public EJBContext getEjbContext() {
@@ -139,18 +127,17 @@ public class ContractRemoteInmpl implements ContractRemote {
         this.currentUser = currentUser;
     }
 
-    
     @Override
     public Person storeUser(Person p, boolean isStaff) {
-        return Convertor.toPerson(pa.storeUser(p.getUsername(), p.getFirstName()
-                , isStaff));
+        return Convertor.toPerson(pa.storeUser(p.getUsername(), p.getFirstName(),
+                 isStaff));
     }
 
     ///// user data///////
     @Override
     public Set<Person> getUsersWithRole(String role) {
         UserRoleEntity u = ua.getUserRoleByName(role);
-        return u.getPersons().stream().map(e->Convertor.toPerson(e)).collect(Collectors.toSet());
+        return u.getPersons().stream().map(e -> Convertor.toPerson(e)).collect(Collectors.toSet());
     }
 
     @Override
@@ -162,8 +149,6 @@ public class ContractRemoteInmpl implements ContractRemote {
         pe.setConsent(p.isConsent());
 
     }
-
-    
 
     @Override
     public Person getUserDataByUserName(String username,
@@ -194,6 +179,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     ///////////// contract logic /////////////
+    @RolesAllowed({STAFF_MEMBER, STUDENT})
     @Override
     public Contract getContractWithUuid(String uuid) {
         ContractEntity e = ca.getContractEntityFromUUID(uuid);
@@ -206,10 +192,12 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+     @RolesAllowed({STAFF_MEMBER})
     public void deleteContract(String contractUUid) {
         ca.deleteContract(contractUUid);
     }
 
+    @RolesAllowed({STAFF_MEMBER, STUDENT})
     @Override
     public double getRemainingVacation(String contractUuid) {
         ContractEntity c = ca.getContractEntityFromUUID(contractUuid);
@@ -225,6 +213,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+     @RolesAllowed({STAFF_MEMBER})
     public String storeContract(Contract c, Person employee,
             Set<Person> secretaries,
             Set<Person> assistants,
@@ -307,6 +296,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+     @RolesAllowed({STAFF_MEMBER})
     public void startContract(String contractUuid) {
         ContractEntity contract = ca.getContractEntityFromUUID(contractUuid);
         contract.setStatus(ContractStatus.STARTED);
@@ -324,6 +314,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER})
     public void terminateContract(String contractUuid) {
         ContractEntity contract = ca.getContractEntityFromUUID(contractUuid);
         contract.setStatus(ContractStatus.TERMINATED);
@@ -333,28 +324,30 @@ public class ContractRemoteInmpl implements ContractRemote {
 
     @Override
     public List<Contract> getAllContract() {
-        return ca.getAllContract().stream().map(e -> Convertor.toContract(e,currentUser))
+        return ca.getAllContract().stream().map(e -> Convertor.toContract(e, currentUser))
                 .collect(Collectors.toList());
     }
-
+    
+     @RolesAllowed({STAFF_MEMBER,STUDENT})
     @Override
     public List<Contract> getAllContractWithRole() {
         return cura.getAllContractUserRoleWith(currentUser)
-                .stream().map(e -> Convertor.toContract(e.getContract(),currentUser))
+                .stream().map(e -> Convertor.toContract(e.getContract(), currentUser))
                 .collect(Collectors.toList());
     }
-
+     @RolesAllowed({STAFF_MEMBER,STUDENT})
     @Override
     public Contract getContractWithTimeSheet(String timeSheetUuid) {
         TimeSheetEntity time = tsa.getSheetEntityFor(timeSheetUuid);
         return Convertor.toContract(time.getParent(), currentUser);
     }
-
+    
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public ContractStatistic getContractStatisctic(String contractUuid) {
         ContractEntity c = ca.getContractEntityFromUUID(contractUuid);
         double totalDue = c.getHourDue();
- 
+
         double vacationHours = 0;
         double workedHours = 0;
         double seekLeaveHours = 0;
@@ -376,7 +369,7 @@ public class ContractRemoteInmpl implements ContractRemote {
             }
         }
         return new ContractStatistic(
-                Convertor.toContract(c, currentUser),totalDue,vacationHours, seekLeaveHours,
+                Convertor.toContract(c, currentUser), totalDue, vacationHours, seekLeaveHours,
                 workedHours, c.getVacationHour());
     }
 
@@ -395,6 +388,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public List<Contract> getAllArchievedContract() {
         return cura.getAllContractUserRoleWith(currentUser)
                 .stream().filter(e -> e.getContract().getStatus() == ContractStatus.ARCHIVED)
@@ -404,10 +398,9 @@ public class ContractRemoteInmpl implements ContractRemote {
 
     }
 
-    
-
     ///// time sheet ///////
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public List<TimeSheet> getAlltTimeSheetFor(String contractUuid) {
         ContractEntity ce = ca.getContractEntityFromUUID(contractUuid);
         if (ce == null) {
@@ -421,6 +414,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public void deleteTimeSheetEntry(String entryUuid) {
 
         tsa.deleteEntryWith(entryUuid);
@@ -428,6 +422,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public TimeSheet getCurrentTimeSheet(String contractUuid) {
         ContractEntity ce = ca.getContractEntityFromUUID(contractUuid);
         if (ce == null) {
@@ -443,11 +438,13 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public TimeSheet getTimeSheetWith(String timeSheetUuid) {
         return Convertor.toTimeSheet(tsa.getSheetEntityFor(timeSheetUuid));
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public String storeTimeEntry(TimeSheetEntry tse, String parentUuid) {
         TimeSheetEntity ts = tsa.getSheetEntityFor(parentUuid);
         TimeSheetEntryEntity tsee;
@@ -472,6 +469,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public boolean signSheet(String sheetUuid) {
         TimeSheetEntity sheet = tsa.getSheetEntityFor(sheetUuid);
         Contract c = Convertor.toContract(sheet.getParent(), currentUser);
@@ -488,6 +486,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public boolean revoveSignature(String sheetUuid) {
         TimeSheetEntity sheetEntity = tsa.getSheetEntityFor(sheetUuid);
         sheetEntity.setSignedByEmployee(null);
@@ -496,6 +495,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public boolean archieveSheet(String sheetUuid) {
         TimeSheetEntity sheetEntity = tsa.getSheetEntityFor(sheetUuid);
         sheetEntity.setStatus(TimeSheetStatus.ARCHIVED);
@@ -513,6 +513,7 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public List<TimeSheetEntry> getAllEntryFor(String timeSheetUuid) {
         TimeSheetEntity tse = tsa.getSheetEntityFor(timeSheetUuid);
         return tsa.getAllEntryFor(tse).stream()
@@ -520,13 +521,9 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    @RolesAllowed({STAFF_MEMBER,STUDENT})
     public TimeSheetEntry getTimeSheetEntry(String uuid) {
         return Convertor.toTimeEntry(tsa.getTimeEntryWith(uuid));
-    }
-
-    @Override
-    public List<TimeSheetEntity> getPendingTimeSheet() {
-        return new ArrayList<>();
     }
 
 }

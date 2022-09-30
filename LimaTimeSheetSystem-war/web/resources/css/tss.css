@@ -190,3 +190,18 @@ body{
     font-size: 1em;
     font-weight: 100;
 }
+
+.guest-title-con{
+    
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.guest-text{
+    font-size: 1.5em;
+    text-align: center;
+    text-justify: distribute;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}

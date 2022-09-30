@@ -7,12 +7,8 @@ package tss.rest;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,14 +58,14 @@ public class TssRestEndpoint {
             PdfWriter.getInstance(document, new FileOutputStream(f));
 
             makeFile(document, c);
-
+            
             f.deleteOnExit();
             return Response.ok(f, MediaType.APPLICATION_OCTET_STREAM)
                     .header("Content-Disposition", "attachment; filename=\"" + c.getName() + ".pdf" + "\"").build();
 
         } catch (Exception e) {
 //            return "file not found " + e.getMessage();
-
+            
         }
         return null;
     }
@@ -79,16 +75,17 @@ public class TssRestEndpoint {
             d.addSubject("Cover Page");
             d.addCreator("TSS");
         Font title = new Font();
-        title.setSize(18);
+        title.setSize(20);
           Font appName = new Font();
-        appName.setSize(22);
+        appName.setSize(24);
         
         Font title2 = new Font();
-        title2.setSize(16);
+        title2.setSize(18);
+        
         title2.setStyle("noraml");
 
         Font title3 = new Font();
-        title3.setSize(11);
+        title3.setSize(14);
 
         title3.setStyle("tiny");
         d.open();
@@ -126,12 +123,13 @@ public class TssRestEndpoint {
         details.add(new Paragraph(
                 "Supervisor :- " + c.getEmployee().getFirstName()
         ));
-        String sec = c.getSecretaries().stream().map(e -> " " + e.getFirstName() + ",").reduce("", (a, b) -> a + b);
+        String sec = c.getSecretaries().stream().map(e -> " " + e.getFirstName() + ",").reduce("", (a, b) -> a + b)+"";
+        
 
         details.add(new Paragraph(
                 "Secretary :- " + sec.substring(0, sec.length() - 1)
         ));
-        String ass = c.getAssistants().stream().map(e -> " " + e.getFirstName() + ",").reduce("", (a, b) -> a + b);
+        String ass = c.getAssistants().stream().map(e -> " " + e.getFirstName() + ",").reduce("", (a, b) -> a + b)+"";
 
         details.add(new Paragraph(
                 "Assisatants :- " + ass.substring(0, ass.length() - 1)

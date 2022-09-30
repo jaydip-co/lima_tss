@@ -22,8 +22,8 @@
         <b:container>
             <b:form>
                 <h:link outcome="DashBoard">
-             <b:button value="#{msg.tsListGBbtn}" icon="back"/>
-        </h:link>
+                    <b:button value="#{msg.tsListGBbtn}" icon="back"/>
+                </h:link>
                 <b:column>
 
                     <h:outputLabel value="#{editContract.contract.name}"
@@ -93,7 +93,7 @@
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
                                 <ui:fragment rendered="#{editContract.contract.assistants.size() == 0}">
-                                      <h:outputText value="--"/>
+                                    <h:outputText value="--"/>
                                 </ui:fragment>
                                 <ui:repeat value="#{editContract.contract.assistants}" var="c">
                                     <h:outputText value="#{c.firstName}"/>
@@ -108,54 +108,55 @@
                                 <h:outputText value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                               
+
                                 <ui:repeat value="#{editContract.contract.secretaries}" var="c">
                                     <h:outputText value="#{c.firstName}"/>
                                 </ui:repeat>
-                               
+
                             </b:column>
                         </b:row>
                         <br/>
                         <br/>
-                        <ui:fragment rendered="#{editContract.contract.roleAssistant} || #{editContract.contract.roleSupervisor}">
-                        <ui:fragment rendered="#{editContract.inPrepared}">
+                       
+                        <ui:fragment rendered="#{editContract.contract.man}">
+                            <ui:fragment rendered="#{editContract.inPrepared}">
 
-                            <b:row styleClass="show-grid">
-                                <b:column span="2" class="col-2">
-                                    <b:commandButton
-                                        class="col-2 btn-success"
-                                        value="#{msg.mcpStartContractBtn}"
-                                        actionListener="#{editContract.startContract}"
-                                        />
-                                </b:column>
-                                <b:column span="2" class="col-2">
-                                    <b:commandButton
-                                        class="col-2 btn-danger"
-                                        value="#{msg.mcpDeletetBtn}"
-                                        action="DashBoard"
-                                        actionListener="#{editContract.deleteContract}"
-                                        />
-                                </b:column>
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2" class="col-2">
+                                        <b:commandButton
+                                            class="col-2 btn-success"
+                                            value="#{msg.mcpStartContractBtn}"
+                                            actionListener="#{editContract.startContract}"
+                                            />
+                                    </b:column>
+                                    <b:column span="2" class="col-2">
+                                        <b:commandButton
+                                            class="col-2 btn-danger"
+                                            value="#{msg.mcpDeletetBtn}"
+                                            action="DashBoard"
+                                            actionListener="#{editContract.deleteContract}"
+                                            />
+                                    </b:column>
 
-                            </b:row>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{editContract.inStarted}">
-
-                            <b:row styleClass="show-grid">
-                                <b:column span="2" class="col-2">
-                                    <b:commandButton
-                                        class="col-2 btn-danger"
-                                        value="#{msg.mcpTerminateBtn}"
-                                        actionListener="#{editContract.terminate}"
-                                        />
-                                </b:column>
-
-                            </b:row>
-                        </ui:fragment>
+                                </b:row>
                             </ui:fragment>
-                        
+                            <ui:fragment rendered="#{editContract.inStarted}">
+
+                                <b:row styleClass="show-grid">
+                                    <b:column span="2" class="col-2">
+                                        <b:commandButton
+                                            class="col-2 btn-danger"
+                                            value="#{msg.mcpTerminateBtn}"
+                                            actionListener="#{editContract.terminate}"
+                                            />
+                                    </b:column>
+
+                                </b:row>
+                            </ui:fragment>
+                        </ui:fragment>
+
                         <ui:fragment rendered="#{editContract.contract.roleSecretary}">
-                             <b:row styleClass="show-grid">
+                            <b:row styleClass="show-grid">
                                 <b:column span="2" class="col-2">
                                     <b:commandButton
                                         class="col-2 btn-danger"
@@ -169,6 +170,6 @@
                     </b:container>
                 </b:column>
             </b:form>
-</b:container>
+        </b:container>
     </ui:define>
 </ui:composition>

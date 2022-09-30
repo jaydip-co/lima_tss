@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tss;
+package tss.web;
 
 import java.io.Serializable;
 import java.time.DateTimeException;
@@ -23,21 +23,23 @@ import tss.remote.ContractRemote;
  */
 @ViewScoped
 @Named
-public class UserDataBean implements Serializable{
+public class UserDataBean implements Serializable {
+
     @EJB
     private ContractRemote cr;
-    
+
     private Person currentUser;
-    
+
     private Date dob;
-    
-    private String year,month,day;
-    
+
+    private String year, month, day;
+
     String errorString = "";
-    
-    public boolean isError(){
+
+    public boolean isError() {
         return !"".equals(errorString);
     }
+
     public ContractRemote getCr() {
         return cr;
     }
@@ -55,7 +57,7 @@ public class UserDataBean implements Serializable{
     }
 
     public String getYear() {
-        
+
         return year;
     }
 
@@ -86,22 +88,21 @@ public class UserDataBean implements Serializable{
     public void setErrorString(String errorString) {
         this.errorString = errorString;
     }
-    
-    
-    
-    
-    
-    
 
     public Person getCurrentUser() {
-        if(currentUser == null){
+        if (currentUser == null) {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            System.err.println("errrorrr");
+
+            System.err.println(context.getUserPrincipal().getName() + "//////////");
             currentUser = cr.getUserDataByUserName(
                     context.getUserPrincipal().getName());
-            day = currentUser.getDob().getDayOfMonth()+"";
-            month = currentUser.getDob().getMonthValue()+"";
-            year = currentUser.getDob().getYear()+"";
-            
+            if (currentUser.getDob() != null) {
+                day = currentUser.getDob().getDayOfMonth() + "";
+
+                month = currentUser.getDob().getMonthValue() + "";
+                year = currentUser.getDob().getYear() + "";
+            }
         }
         return currentUser;
     }
@@ -109,30 +110,26 @@ public class UserDataBean implements Serializable{
     public void setCurrentUser(Person currentUser) {
         this.currentUser = currentUser;
     }
-    
-    public void storeData(){
+
+    public void storeData() {
         LocalDate dob;
-        try{
+        try {
             errorString = "";
-         int y = Integer.parseInt(year);
+            int y = Integer.parseInt(year);
             int m = Integer.parseInt(month);
             int d = Integer.parseInt(day);
-         dob = LocalDate.of(y, m, d);
+            dob = LocalDate.of(y, m, d);
+        } catch (Exception e) {
+
+            errorString = "Please Enter Valid Date";
+            return;
         }
-        catch(Exception e){
-           
-            
-             errorString = "Please Enter Valid Date";
-               return;
+        if (dob == null || dob.equals(LocalDate.now()) || dob.isAfter(LocalDate.now())) {
+            errorString = "Invalid Dob";
         }
-        if(dob == null || dob.equals(LocalDate.now()) || dob.isAfter(LocalDate.now())){
-            errorString  = "Invalid Dob";
-        } 
         currentUser.setDob(dob);
-       cr.storeUserData(currentUser);
-       currentUser = null;
+        cr.storeUserData(currentUser);
+        currentUser = null;
     }
-    
-    
-    
+
 }

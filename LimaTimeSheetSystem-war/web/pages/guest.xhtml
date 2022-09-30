@@ -18,8 +18,28 @@
 
     </ui:define>
     <ui:define name="content">
-        
-        Guest Page
 
+        <b:container style="text-align: center">
+            <b:container>
+                <b:container class="guest-title-con">
+
+                    <h:outputLabel value="#{msg.footerAppTitle}" class="fa-3x"/>
+                </b:container>
+                <br/>
+                <b:container style="margin-top: 60px; margin-bottom: 60px">
+                    <h:outputText value="#{msg.guestPara1}" class="guest-text"/><br/>
+                    <h:outputText value="#{msg.guestPara2}" class="guest-text"  /><br/>
+                    <h:outputText value="#{msg.guestPara3}" class="guest-text"/><br/>
+                    <h:outputText value="#{msg.guestPara4}" class="guest-text"/><br/>
+                </b:container>
+                <h:form>
+                    <h:commandButton class="logout-btn" 
+                                     value="#{msg.dbLogOutbtn}" 
+                                     action="Welcome"
+                                     actionListener="#{loginBean.logout}">
+                    </h:commandButton>
+                </h:form>
+            </b:container>
+        </b:container>
     </ui:define>
 </ui:composition>
