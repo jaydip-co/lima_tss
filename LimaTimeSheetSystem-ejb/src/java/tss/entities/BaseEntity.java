@@ -76,7 +76,7 @@ public class BaseEntity  {
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
-
+    
     public int getJpaVersion() {
         return jpaVersion;
     }

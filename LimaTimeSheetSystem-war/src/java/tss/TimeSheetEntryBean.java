@@ -83,7 +83,7 @@ public class TimeSheetEntryBean implements Serializable {
     }
 
     public void setEntry() {
-        cr.storeEntryFor(uuid);
+//        cr.storeEntryFor(uuid);
     }
 
     public void signSheet() {

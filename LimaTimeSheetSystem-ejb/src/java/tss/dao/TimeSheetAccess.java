@@ -10,7 +10,6 @@ import java.time.LocalTime;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import tss.TimeSeet;
 import tss.entities.ContractEntity;
 import tss.entities.TimeSheetEntity;
 import tss.entities.TimeSheetEntryEntity;

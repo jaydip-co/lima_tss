@@ -10,6 +10,14 @@
     <role-name>STAFFMEMBER</role-name>
     <group-name>staffmember</group-name>
   </security-role-mapping>
+  <security-role-mapping>
+    <role-name>GUEST</role-name>
+    <group-name>guest</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>ADMIN</role-name>
+    <group-name>admin</group-name>
+  </security-role-mapping>
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">

@@ -80,10 +80,8 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>SUPERVISOR</role-name>
-            <role-name>ASSISTANT</role-name>
-             <role-name>SECRETARY</role-name>
-             <role-name>STAFFMEMBER</role-name>
+            
+            <role-name>STAFFMEMBER</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -96,9 +94,9 @@
         <auth-constraint>
             <description/>
         
-             <role-name>STAFFMEMBER</role-name>
+            <role-name>STAFFMEMBER</role-name>
              
-             <role-name>STUDENT</role-name>
+            <role-name>STUDENT</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
@@ -111,7 +109,7 @@
     </login-config>
     <security-role>
         <description>Authenticated SUPERVISOR</description>
-        <role-name>ADMINISTRATOR</role-name>
+        <role-name>ADMIN</role-name>
     </security-role>
     <security-role>
         <description>Authenticated student</description>

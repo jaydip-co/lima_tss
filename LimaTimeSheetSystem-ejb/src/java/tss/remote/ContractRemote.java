@@ -36,7 +36,7 @@ public interface ContractRemote {
 
     public Person getUserData();
 
-    public Person storeUser(Person p, String[] roles);
+   
 
     public Person storeUser(Person p, boolean isStaff);
 
@@ -45,9 +45,6 @@ public interface ContractRemote {
 
     public Contract getContractWithUuid(String uuid);
 
-    public void storeTimeSheetFor(String contractUuid);
-
-    public void storeEntryFor(String timeSheetUuid);
 
     //////////////// cointract ////////
     public List<Contract> getAllContractWithRole();
@@ -67,7 +64,7 @@ public interface ContractRemote {
     public ContractStatistic getContractStatisctic(String contractUuid);
 
     //////////// user Data /////////
-    public Person getUserDataByUserName(String username, List<String> roles, boolean isStaff);
+    public Person getUserDataByUserName(String username, boolean isStaff);
     
     public Person getUserDataByUserName(String username);
     

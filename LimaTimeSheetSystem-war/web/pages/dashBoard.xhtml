@@ -20,6 +20,7 @@
         <h:form>
 
             <!--- Employee table -->
+            <ui:fragment rendered="#{loginBean.guest}"/>
             <ui:fragment rendered="#{dashBoard.contractWithEmployee.size() > 0}">
                 <h:outputLabel value="#{msg.dashboardEmployeeContract}"
                                class="fa-2x"/>
@@ -40,7 +41,7 @@
                         ${c.name}
                     </b:dataTableColumn>
                     <b:dataTableColumn label="#{msg.dbDataTableColumnStatus}" orderable="false">
-                        #{c.status}
+                         <h:outputText style="color: #{c.statusColor};" value="#{c.status}"/>
                     </b:dataTableColumn>
                     <b:dataTableColumn label="#{msg.dbDataTableColumnSD}" orderable="false">
                         #{c.startDate}
@@ -67,17 +68,17 @@
             </ui:fragment>
             <br/>
             <ui:fragment rendered="#{dashBoard.contractWithManager.size() == 0 &amp;&amp; dashBoard.contractWithEmployee.size() == 0}">
-                <b:container class="margin-5 align-items-center">
+                <b:container style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
 
-                    <b:row>
-                        <b:column span="12" offset="4">
+                    
                             <h:outputLabel value="#{msg.dashboardDontHaveContract}" />
-                        </b:column>
-                    </b:row>
+                        
                 </b:container>
             </ui:fragment>
 
             <br/>
+            
+             <!--- Manager table -->
             <ui:fragment rendered="#{dashBoard.contractWithManager.size() > 0}">
                 <h:outputLabel value="#{msg.dashboardManagerContract}" class="fa-2x"/>
                 <br/>
@@ -99,7 +100,8 @@
                         #{c.currentUserRole}
                     </b:dataTableColumn>
                     <b:dataTableColumn label="#{msg.dbManagerTableStatus}" orderable="false">
-                        #{c.status}
+                        <h:outputText style="color: #{c.statusColor};" value="#{c.status}"/>
+                        
                     </b:dataTableColumn>
                     <b:dataTableColumn label="#{msg.dbManagerTableDH}" orderable="false">
                         #{c.hourDue}
@@ -162,6 +164,8 @@
             </ui:fragment> 
             <br/>
             <br/>
+            
+             <!--- Archive table -->
             <ui:fragment rendered="#{dashBoard.archievedContract.size() > 0}">
                 <h:outputLabel value="#{msg.dashboardArchievedContract}" class="fa-2x"/>
                 <br/>

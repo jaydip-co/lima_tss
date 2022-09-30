@@ -5,6 +5,7 @@
  */
 package tss;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -48,39 +49,39 @@ public class LoginBean implements Serializable{
                 }
             }
         currentUser = cr.getUserDataByUserName(p.getName(),
-                    userRoles,ec.isUserInRole("STAFFMEMBER"));
+                    ec.isUserInRole("STAFFMEMBER"));
           if(currentUser == null){
             return "";
         }
         return currentUser.getFirstName();
     }
     
-     public String getUsetRole(){
-        String[] roles = {
-            "ADMINISTRATOR",
-            "STUDENT",
-            "STAFFMEMBER",
-            "SECRETARY",
-            "ASSISTANT",
-            "SUPERVISOR",
-            "EMPLOYEE",
-            "GEUST"};
-        String  name = "";
-        List userRoles = new ArrayList(roles.length);
-        try{
-            userRoles.clear();
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            for(String s : roles){
-                if(ec.isUserInRole(s)){
-                    userRoles.add(s);
-                }
-            }
-        }
-        catch(Exception e){
-            name = e.getMessage();
-        }
-       return userRoles.toString();
-    }
+//     public String getUsetRole(){
+//        String[] roles = {
+//            "ADMINISTRATOR",
+//            "STUDENT",
+//            "STAFFMEMBER",
+//            "SECRETARY",
+//            "ASSISTANT",
+//            "SUPERVISOR",
+//            "EMPLOYEE",
+//            "GEUST"};
+//        String  name = "";
+//        List userRoles = new ArrayList(roles.length);
+//        try{
+//            userRoles.clear();
+//            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+//            for(String s : roles){
+//                if(ec.isUserInRole(s)){
+//                    userRoles.add(s);
+//                }
+//            }
+//        }
+//        catch(Exception e){
+//            name = e.getMessage();
+//        }
+//       return userRoles.toString();
+//    }
      
     public boolean isLoggedIn(){
         return currentUser != null;
@@ -104,6 +105,24 @@ public class LoginBean implements Serializable{
      
      public boolean isAssistant(){
        return  hasRole(UserRoles.ASSISTANT);
+     }
+     
+     public boolean isGuest(){
+         try{
+         
+         boolean b = hasRole("GUEST");
+         if(b){
+             String url = FacesContext.getCurrentInstance()
+                     .getExternalContext().getRequestContextPath();
+             FacesContext.getCurrentInstance()
+                     .getExternalContext().redirect(url+"/pages/guest.xhtml");
+         }
+         }
+         catch(IOException e){
+             System.err.println(e.toString());
+             
+         }
+         return hasRole("GUEST");
      }
      
       public void invalidateSession() {

@@ -6,8 +6,6 @@
 package tss.schedule;
 
 import com.sun.istack.logging.Logger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,7 +29,6 @@ import tss.UserRoles;
 import tss.dao.TimeSheetAccess;
 import tss.entities.PersonEntity;
 import tss.entities.TimeSheetEntity;
-import tss.entities.UserRoleEntity;
 import tss.remote.ContractRemote;
 
 /**
@@ -53,14 +50,12 @@ public class TssTaskScheduler {
     @PostConstruct
     public void initialize() {
         Logger.getLogger("tss", TssTaskScheduler.class)
-                .log(Level.SEVERE, "Timer is runninnggg");
+                .log(Level.SEVERE, "Started...");
     }
 
     @Schedule(minute = "15", hour = "6", second = "0", persistent = false)
     public void addData() throws InterruptedException {
-        System.err.println("Runninnggg.......");
         List<TimeSheetEntity> pendingEntries = tsa.getAllPendingEntry();
-        System.err.println("Data :- " + pendingEntries.size());
 
         Map<PersonEntity, Set<TimeSheetEntity>> m = new HashMap<>();
 
@@ -113,6 +108,7 @@ public class TssTaskScheduler {
                 }
             });
             
-        
+          Logger.getLogger("tss", TssTaskScheduler.class)
+                .log(Level.SEVERE, "Remainder sent successfully");
     }
 }

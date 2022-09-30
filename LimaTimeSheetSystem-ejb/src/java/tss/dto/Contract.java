@@ -17,50 +17,50 @@ import tss.enums.TimeSheetFrequency;
  * @author savaliya
  */
 @XmlRootElement
-public class Contract extends BaseDTO{
-    
-    private static final long serialVersionUID = -4848962003160569842L;
-    
-    
-    private String name;
-    
-    private ContractStatus status;
-    
-    private LocalDate startDate;
-    
-    private LocalDate endDate;
-    
-    
-    private TimeSheetFrequency frequency;
-    
-    private LocalDate terminationDate;
-    
-    private double hoursPerWeek;
-    
-    private double vacationHour;
-    
-    private double hourDue;
-    
-    private int workingDaysPerWeek;
-    
-    private int vacationDaysPerYear;
-    
-    private Person employee;
-    
-    private Person supervisor;
-    
-    private List<Person> secretaries;
-    
-    private List<Person> assistants;
-    
-    private String currentUserRole;
-    public Contract(){}
+public class Contract extends BaseDTO {
 
-    public Contract(String name, ContractStatus status, 
-            LocalDate startDate, LocalDate endDate, 
-            TimeSheetFrequency frequency, LocalDate terminationDate, 
+    private static final long serialVersionUID = -4848962003160569842L;
+
+    private String name;
+
+    private ContractStatus status;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private TimeSheetFrequency frequency;
+
+    private LocalDate terminationDate;
+
+    private double hoursPerWeek;
+
+    private double vacationHour;
+
+    private double hourDue;
+
+    private int workingDaysPerWeek;
+
+    private int vacationDaysPerYear;
+
+    private Person employee;
+
+    private Person supervisor;
+
+    private List<Person> secretaries;
+
+    private List<Person> assistants;
+
+    private String currentUserRole;
+
+    public Contract() {
+    }
+
+    public Contract(String name, ContractStatus status,
+            LocalDate startDate, LocalDate endDate,
+            TimeSheetFrequency frequency, LocalDate terminationDate,
             double hoursPerWeek, double vacationHour, double hourDue,
-            int workingDaysPerWeek, int vacationDaysPerYear, String uuid, 
+            int workingDaysPerWeek, int vacationDaysPerYear, String uuid,
             int jpaVersion,
             Person employee,
             Person supervisor,
@@ -83,7 +83,7 @@ public class Contract extends BaseDTO{
         this.supervisor = supervisor;
         this.secretaries = secretaries;
         this.assistants = assistants;
-        
+
         this.currentUserRole = currentUserRole;
     }
 
@@ -94,7 +94,7 @@ public class Contract extends BaseDTO{
     public void setCurrentUserRole(String currentUserRole) {
         this.currentUserRole = currentUserRole;
     }
-    
+
     public Person getSupervisor() {
         return supervisor;
     }
@@ -118,8 +118,6 @@ public class Contract extends BaseDTO{
     public void setAssistants(List<Person> assistants) {
         this.assistants = assistants;
     }
-    
-    
 
     public Person getEmployee() {
         return employee;
@@ -128,12 +126,9 @@ public class Contract extends BaseDTO{
     public void setEmployee(Person employee) {
         this.employee = employee;
     }
-    
-    
-    
-    
-    public Contract(String name,String uuid){
-        super(uuid,1);
+
+    public Contract(String name, String uuid) {
+        super(uuid, 1);
         this.name = name;
     }
 
@@ -224,21 +219,57 @@ public class Contract extends BaseDTO{
     public void setVacationDaysPerYear(int vacationDaysPerYear) {
         this.vacationDaysPerYear = vacationDaysPerYear;
     }
-    
-    
-    public boolean isManager(){
+
+    public boolean isManager() {
         List<String> roles = List.of(UserRoles.SECRETARY, UserRoles.SUPERVISOR, UserRoles.ASSISTANT);
         return roleContain(roles);
     }
     
-    private boolean roleContain(List<String> roles){
-       return roles.contains(currentUserRole);
+    public boolean isRoleSecretary(){
+        List<String> roles = List.of(UserRoles.SECRETARY);
+        return roleContain(roles);
     }
     
-    public boolean inStarted(){
+    public boolean isRoleSupervisor(){
+        List<String> roles = List.of(UserRoles.SUPERVISOR);
+        return roleContain(roles);
+    }
+    
+    public boolean isRoleAssistant(){
+        List<String> roles = List.of(UserRoles.ASSISTANT);
+        return roleContain(roles);
+    }
+
+    private boolean roleContain(List<String> roles) {
+        return roles.contains(currentUserRole);
+    }
+
+    public boolean inStarted() {
         return status == ContractStatus.STARTED;
     }
-    public boolean inPrepared(){
+
+    public boolean inPrepared() {
         return status == ContractStatus.PREPARED;
+    }
+
+    public String getStatusColor() {
+        String color = "";
+        switch (this.status) {
+            case PREPARED:
+                color = "#bcc30b";
+                
+                break;
+            case STARTED:
+                color = "#17c634";
+                break;
+            case TERMINATED:
+                color = "#ed2f12";
+                break;
+            case ARCHIVED:
+                color = "gray";
+                break;
+        }
+
+        return color;
     }
 }

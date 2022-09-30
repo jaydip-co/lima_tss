@@ -20,7 +20,7 @@
     <ui:define name="content">
 
         <div class ="row d-flex justify-content-center align-items-center h-100">
-            <h3> TIME SHEET SYSTEM </h3>
+            <h3>#{msg.footerAppTitle}</h3>
         </div>
         <form class="form form-horizontal" role="form" method="post" action="j_security_check" name="loginForm">
             <div class="container py-5 h-100">
@@ -42,13 +42,19 @@
                                                align="center" value ="x"
                                                name="j_password" autocomplete="off"/>
                                     </div>
-                                    <p class="small mb-5 pb-lg-2"><a class="text-white-50 fa-2x" href="#!">Forgot password?</a></p>
+
                                     <button class="btn btn-success btn-lg px-5" type="submit">#{msg.loginButtonLabel}</button>
                                 </div>
                                 <div>
-                                    <p class="mb-0"><a href="#!" class="text-white-50 fw-bold fa-1x">#{msg.loginEnglishLanbtn}</a>
-                                        <a href="#!" class="p-3 text-white-50 fw-bold fa-1x">#{msg.loginGermanLanbtn}</a>
-                                    </p>
+                                    <h:form>
+                                        <h:commandButton class="text-white-50 fw-bold fa-1x"
+                                                       actionListener="#{lc.selectEnglish}"
+                                                       value="#{msg.loginEnglishLanbtn}"/> -
+                                        <h:commandButton class="text-white-50 fw-bold fa-1x"
+                                                       actionListener="#{lc.selectGerman}"
+                                                       value="#{msg.loginGermanLanbtn}"/>
+                                    </h:form>
+
                                 </div>
                             </div>
                         </div>

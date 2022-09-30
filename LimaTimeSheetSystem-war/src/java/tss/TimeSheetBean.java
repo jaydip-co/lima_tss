@@ -67,7 +67,7 @@ public class TimeSheetBean implements Serializable{
     
     public void addTimeSheets(){
         
-        cr.storeTimeSheetFor(contractUuid);
+//        cr.storeTimeSheetFor(contractUuid);
     }
     
     public boolean isTimesheetAwailable(){

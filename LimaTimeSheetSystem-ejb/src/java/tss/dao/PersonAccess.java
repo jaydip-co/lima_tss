@@ -43,13 +43,11 @@ public class PersonAccess  extends BaseAccess{
         }
     }
     public PersonEntity storeUser(String username,
-            String firsname,Set<UserRoleEntity> entities,boolean isStaff){
+            String firsname,boolean isStaff){
         PersonEntity entity = new PersonEntity(true);
         entity.setFirstName(firsname);
         entity.setUsername(username);
-        entity.setUserRoles(entities);
-        entities.forEach((a)->{
-        a.getPersons().add(entity);});
+       
         entity.setIsStaffMember(isStaff);
         em.persist(entity);
         return entity;
