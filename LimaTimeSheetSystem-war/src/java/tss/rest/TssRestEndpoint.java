@@ -19,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import tss.dto.Contract;
 
 import tss.remote.ContractRemote;
 
@@ -39,9 +40,12 @@ public class TssRestEndpoint {
     @Path("list")
     @GET
     @Produces({MediaType.APPLICATION_OCTET_STREAM})
-    public Response getContactList(@QueryParam("id") String id) {
+    public Response getConract(@QueryParam("id") String id) {
        
         try {
+            
+            Contract c = cr.getContractWithUuid(id);
+            
             File f = File.createTempFile("pref", ".pdf");
             if (!f.getParentFile().exists()) {
                 f.getParentFile().mkdir();
@@ -53,13 +57,14 @@ public class TssRestEndpoint {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(f));
             document.open();
-            document.addTitle("My first PDF");
-            document.addSubject("Using iText");
-            document.addKeywords("Java, PDF, iText");
-            document.addAuthor("Lars Vogel");
-            document.addCreator("Lars Vogel");
+            
+//            document.addTitle("My first PDF");
+//            document.addSubject("Using iText");
+//            document.addKeywords("Java, PDF, iText");
+//            document.addAuthor("Lars Vogel");
+//            document.addCreator("Lars Vogel");
             Paragraph para = new Paragraph();
-            para.add(new Paragraph("hi i am jaydip  "+id));
+            para.add(new Paragraph("hi i am jaydip  "+c.getName()));
             document.add(para);
             
             document.close();

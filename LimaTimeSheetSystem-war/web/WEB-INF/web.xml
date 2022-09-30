@@ -86,6 +86,21 @@
              <role-name>STAFFMEMBER</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>Sheets access</display-name>
+        <web-resource-collection>
+            <web-resource-name>Contract</web-resource-name>
+            <description/>
+            <url-pattern>/pages/timesheets/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+        
+             <role-name>STAFFMEMBER</role-name>
+             
+             <role-name>STUDENT</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>tss-file-realm</realm-name>
@@ -94,23 +109,6 @@
             <form-error-page>/pages/auth/login.xhtml</form-error-page>
         </form-login-config>
     </login-config>
-    
-    <security-role>
-        <description>Authenticated EMPLOYEE</description>
-        <role-name>EMPLOYEE</role-name>
-    </security-role>
-   <security-role>
-        <description>Authenticated SUPERVISOR</description>
-        <role-name>SUPERVISOR</role-name>
-    </security-role>
-    <security-role>
-        <description>Authenticated SUPERVISOR</description>
-        <role-name>ASSISTANT</role-name>
-    </security-role>
-    <security-role>
-        <description>Authenticated SUPERVISOR</description>
-        <role-name>SECRETARY</role-name>
-    </security-role>
     <security-role>
         <description>Authenticated SUPERVISOR</description>
         <role-name>ADMINISTRATOR</role-name>

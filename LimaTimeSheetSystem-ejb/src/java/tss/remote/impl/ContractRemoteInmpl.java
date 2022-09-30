@@ -29,6 +29,7 @@ import tss.dao.PersonAccess;
 import tss.dao.TimeSheetAccess;
 import tss.dao.UserRoleAccess;
 import tss.dto.Contract;
+import tss.dto.ContractStatistic;
 import tss.dto.Convertor;
 import tss.dto.Person;
 import tss.dto.TimeSheet;
@@ -198,10 +199,8 @@ public class ContractRemoteInmpl implements ContractRemote {
         pe.setLastName(p.getLastName());
         pe.setDob(p.getDob());
         pe.setConsent(p.isConsent());
-        
+
     }
-    
-    
 
     private Person createPersonDTO(PersonEntity p) {
         return Convertor.toPerson(p);
@@ -232,8 +231,6 @@ public class ContractRemoteInmpl implements ContractRemote {
         PersonEntity user = pa.getUserDataFromUsername(username);
         return Convertor.toPerson(user);
     }
-    
-    
 
     @Override
     public List<Person> getAllUser(boolean isStaff) {
@@ -382,6 +379,7 @@ public class ContractRemoteInmpl implements ContractRemote {
         ContractEntity contract = ca.getContractEntityFromUUID(contractUuid);
         contract.setStatus(ContractStatus.TERMINATED);
         tsa.deleteSheeetWith(contract, TimeSheetStatus.IN_PROGRESS);
+        checkForArchieveContract(contractUuid);
     }
 
     @Override
@@ -403,13 +401,43 @@ public class ContractRemoteInmpl implements ContractRemote {
     }
 
     @Override
+    public ContractStatistic getContractStatisctic(String contractUuid) {
+        ContractEntity c = ca.getContractEntityFromUUID(contractUuid);
+        double totalDue = c.getHourDue();
+ 
+        double vacationHours = 0;
+        double workedHours = 0;
+        double seekLeaveHours = 0;
+        for (TimeSheetEntity t : c.getTimeSheets()) {
+            for (TimeSheetEntryEntity tse : t.getTimeSheetEntry()) {
+                switch (tse.getReportType()) {
+                    case SICK_LEAVE:
+                        seekLeaveHours += tse.getHours();
+                        break;
+                    case VACATION:
+                        vacationHours += tse.getHours();
+                        break;
+                    case WORK:
+                        workedHours += tse.getHours();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return new ContractStatistic(
+                Convertor.toContract(c, currentUser),totalDue,vacationHours, seekLeaveHours,
+                workedHours, c.getVacationHour());
+    }
+
+    @Override
     public List<Contract> getContractsWithRole(String[] roles) {
         Set<Contract> contracts = new HashSet<>();
         for (String r : roles) {
             contracts.addAll(
                     cura.getContractWithRole(currentUser, r)
                             .stream()
-                            .filter(e->e.getContract().getStatus() != ContractStatus.ARCHIVED)
+                            .filter(e -> e.getContract().getStatus() != ContractStatus.ARCHIVED)
                             .map(e -> Convertor.toContract(e.getContract(), currentUser))
                             .collect(Collectors.toList()));
         }
@@ -419,14 +447,12 @@ public class ContractRemoteInmpl implements ContractRemote {
     @Override
     public List<Contract> getAllArchievedContract() {
         return cura.getAllContractUserRoleWith(currentUser)
-                .stream().filter(e-> e.getContract().getStatus() == ContractStatus.ARCHIVED)
+                .stream().filter(e -> e.getContract().getStatus() == ContractStatus.ARCHIVED)
                 .map(e -> Convertor.toContract(e.getContract(), currentUser))
                 .collect(Collectors.toSet())
                 .stream().collect(Collectors.toList());
-        
+
     }
-    
-    
 
     private Contract createDTO(ContractEntity ce) {
         return Convertor.toContract(ce, currentUser);
@@ -561,6 +587,11 @@ public class ContractRemoteInmpl implements ContractRemote {
     @Override
     public TimeSheetEntry getTimeSheetEntry(String uuid) {
         return Convertor.toTimeEntry(tsa.getTimeEntryWith(uuid));
+    }
+
+    @Override
+    public List<TimeSheetEntity> getPendingTimeSheet() {
+        return new ArrayList<>();
     }
 
 }

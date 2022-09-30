@@ -36,21 +36,24 @@ import tss.logic.CalculationLogic;
             query = "SELECT c FROM time_sheet c "
             + "WHERE c.parent = :contract ORDER BY c.id"
     ),
-     @NamedQuery(
-            name ="getTimeSheetWithStatus",
+    @NamedQuery(
+            name = "getTimeSheetWithStatus",
             query = "SELECT c FROM time_sheet c "
             + "WHERE c.status = :status AND c.parent =:contract"
-    )
+    ),
+    @NamedQuery(
+            name = "getPendingSheet",
+            query = "SELECT c FROM time_sheet c  "
+            + "WHERE c.status = :status AND c.endDate <=:end")
 })
 @Entity(name = "time_sheet")
 public class TimeSheetEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    @Column(nullable = false,columnDefinition = "varchar(255) default 'IN_PROGRESS'")
+
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'IN_PROGRESS'")
     @Enumerated(EnumType.STRING)
     private TimeSheetStatus status;
-    
 
     private LocalDate startDate;
 
@@ -62,7 +65,7 @@ public class TimeSheetEntity extends BaseEntity implements Serializable {
 
     private LocalDate signedBySupervisor;
 
-    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private Set<TimeSheetEntryEntity> timeSheetEntry;
 
     @ManyToOne
@@ -143,17 +146,17 @@ public class TimeSheetEntity extends BaseEntity implements Serializable {
     public void setTimeSheetEntry(Set<TimeSheetEntryEntity> timeSheetEntry) {
         this.timeSheetEntry = timeSheetEntry;
     }
-    
-    public void calculateDueHours(){
-        this.hoursDue = CalculationLogic.getHoursDue(startDate, endDate,parent.getHoursPerWeek(),parent.getWorkingDaysPerWeek());
+
+    public void calculateDueHours() {
+        this.hoursDue = CalculationLogic.getHoursDue(startDate, endDate, parent.getHoursPerWeek(), parent.getWorkingDaysPerWeek());
     }
-    
-    public double getWorkHours(){
+
+    public double getWorkHours() {
         double h = 0.0;
-       h = getTimeSheetEntry().stream().mapToDouble(TimeSheetEntryEntity::getHours)
-                .reduce(h, (a,b) -> a+b);
-       return h;
-        
+        h = getTimeSheetEntry().stream().mapToDouble(TimeSheetEntryEntity::getHours)
+                .reduce(h, (a, b) -> a + b);
+        return h;
+
     }
 
 }

@@ -97,6 +97,8 @@ public class LoginBean implements Serializable{
      }
      
      public boolean isStaff(){
+         getUser();
+         
         return currentUser.isIsStaff();
      }
      
@@ -126,6 +128,14 @@ public class LoginBean implements Serializable{
                 
          return p.isUserInRole(role);
      }
+
+    public Person getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Person currentUser) {
+        this.currentUser = currentUser;
+    }
      
     
 }

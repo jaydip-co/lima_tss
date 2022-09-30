@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+-->
+
+<ui:composition
+    template="/WEB-INF/templates/templet.xhtml"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    >
+    <ui:define name="metadata"> 
+        <f:metadata>
+            <f:viewParam id="uuid" name="uuid" value="${statisticBean.contractUuid}"
+                         required="true"
+                         requiredMessage="UUID required"/>
+        </f:metadata>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            // Load the Visualization API and the piechart package.
+            google.charts.load('current', {'packages': ['corechart']});
+            /* google.load('visualization', '1.0', {
+             'packages' : [ 'corechart' ]
+             }); */
+
+            // Set a callback to run when the Google Visualization API is loaded.
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Callback that creates and populates a data table,
+            // instantiates the pie chart, passes in the data and
+            // draws it.
+            function drawChart() {
+                // Create the data table.
+                var data = google.visualization.arrayToDataTable([
+                    ['Work Type', 'Hours(hour)'],
+            #{statisticBean.totalHoursChartData}
+                ]);
+
+                // Set chart options
+                var options = {
+                    'title': 'Total Hours of Contract',
+                    is3D: false,
+
+                    pieSliceText: 'label',
+                    tooltip: {
+                        showColorCode: false
+                    },
+                    slices: {
+                        0: {color: 'Green'},
+                        1: {color: '#670df2'},
+                        2: {color: 'yellow'},
+                        3: {color: '#e6e6e5'}
+
+                    },
+
+                    'width': 500,
+                    'height': 500
+                };
+
+                var data2 = google.visualization.arrayToDataTable([
+                    ['Vacation', 'Hours(hour)'],
+                #{statisticBean.vacationHoursData}
+                ]);
+
+                var options2 = {
+                    'title': 'Vacation Hours',
+                    is3D: false,
+                    pieSliceText: 'label',
+                    tooltip: {
+                        showColorCode: false
+                    },
+                    slices: {
+                        0: {color: '#e6e6e5'},
+                        1: {color: 'Green'}
+
+                    },
+
+                    'width': 500,
+                    'height': 500
+                };
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+                var chart2 = new google.visualization.PieChart(document.getElementById('chart'));
+                chart2.draw(data2, options2);
+            }
+        </script>
+    </ui:define>
+    <ui:param name="title" value="#{statisticBean.contract.name} - Statistic"/>
+    <ui:define name = "scripts">
+
+    </ui:define>
+    <ui:define name="content">
+        <h:outputLabel value="#{msg.tsListContractTxt} #{statisticBean.contract.name}" class="fa-2x"/>
+        <br/>
+        <br/>
+        <b:row styleClass="show-grid">
+            <b:column span="2">
+                <h:outputText value="#{msg.mcpStatusLabel}" />
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="2" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.contract.status}"/>
+            </b:column>
+        </b:row>
+        <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{msg.mcpStartDateLabel}"/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.contract.startDate}"/>
+            </b:column>
+        </b:row>
+        <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{msg.mcpEndDateLabel}"/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.contract.endDate}"/>
+            </b:column>
+        </b:row>
+        <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="Total Due"/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.statistic.totalDueHour} hours"/>
+            </b:column>
+        </b:row>
+         <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="Worked Hours"/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.statistic.workedHours} hours"/>
+            </b:column>
+        </b:row>
+         <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="Vacation hours"/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.statistic.vacationHours} hours"/>
+            </b:column>
+        </b:row>
+         <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="Seek Leave"/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.statistic.seekLeaveHours} hours"/>
+            </b:column>
+        </b:row>
+         <b:row styleClass="show-grid">
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="Total vacation "/>
+            </b:column>
+            <b:column col-xs="1" col-sm="1" col-md="1" >
+                <h:outputText value=":"/>
+            </b:column>
+            <b:column col-xs="3" col-sm="2" col-md="2">
+                <h:outputText value="#{statisticBean.statistic.totalDueHour} hours"/>
+            </b:column>
+        </b:row>
+        <b:row>  
+            <b:column span="5">
+                
+                <div id="chart_div" class="col-3"/>
+            </b:column>
+            <b:column span="5">
+                <div id="chart" class="col-3"/>
+            </b:column>
+        </b:row>
+
+
+    </ui:define>
+</ui:composition>

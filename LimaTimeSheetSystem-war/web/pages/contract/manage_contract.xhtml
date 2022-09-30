@@ -19,8 +19,12 @@
     </ui:define>
     <ui:param name="pageHeadline" value="#{msg.mcpTitletxt}"/>
     <ui:define name="content">
-        
+        <b:container>
             <b:form>
+                <h:link outcome="DashBoard">
+           
+             <b:button value="#{msg.tsListGBbtn}" icon="back"/>
+        </h:link>
                 <b:column>
 
                     <h:outputLabel value="#{editContract.contract.name}"
@@ -28,46 +32,88 @@
                     <b:container class="mngtable" >
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="#{msg.mcpStatusLabel}"/>
+                                <h:outputText value="#{msg.mcpStatusLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
-                                <h:outputLabel value=":"/>
+                                <h:outputText value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="#{editContract.contract.status}"/>
+                                <h:outputText value="#{editContract.contract.status}"/>
                             </b:column>
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="#{msg.mcpStartDateLabel}"/>
+                                <h:outputText value="#{msg.mcpStartDateLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
-                                <h:outputLabel value=":"/>
+                                <h:outputText value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="1-9-2022"/>
+                                <h:outputText value="#{editContract.contract.startDate}"/>
                             </b:column>
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="#{msg.mcpEndDateLabel}"/>
+                                <h:outputText value="#{msg.mcpEndDateLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
-                                <h:outputLabel value=":"/>
+                                <h:outputText value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="30-9-2022"/>
+                                <h:outputText value="#{editContract.contract.endDate}"/>
                             </b:column>
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="#{msg.mcpEmployeeLabel}"/>
+                                <h:outputText value="#{msg.mcpEmployeeLabel}"/>
                             </b:column>
                             <b:column col-xs="1" col-sm="1" col-md="1" >
-                                <h:outputLabel value=":"/>
+                                <h:outputText value=":"/>
                             </b:column>
                             <b:column col-xs="3" col-sm="2" col-md="2">
-                                <h:outputLabel value="#{msg.mcpEmployeeNameLabel}"/>
+                                <h:outputText value="#{editContract.contract.employee.firstName}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputText value="Supervisor"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputText value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputText value="#{editContract.contract.supervisor.firstName}"/>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputText value="Assistant"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputText value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <ui:fragment rendered="#{editContract.contract.assistants.size() == 0}">
+                                      <h:outputText value="--"/>
+                                </ui:fragment>
+                                <ui:repeat value="#{editContract.contract.assistants}" var="c">
+                                    <h:outputText value="#{c.firstName}"/>
+                                </ui:repeat>
+                            </b:column>
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                                <h:outputText value="Secretary"/>
+                            </b:column>
+                            <b:column col-xs="1" col-sm="1" col-md="1" >
+                                <h:outputText value=":"/>
+                            </b:column>
+                            <b:column col-xs="3" col-sm="2" col-md="2">
+                               
+                                <ui:repeat value="#{editContract.contract.secretaries}" var="c">
+                                    <h:outputText value="#{c.firstName}"/>
+                                </ui:repeat>
+                                <h:outputText value="#{msg.mcpEmployeeNameLabel}"/>
                             </b:column>
                         </b:row>
                         <br/>
@@ -115,6 +161,6 @@
                     </b:container>
                 </b:column>
             </b:form>
-
+</b:container>
     </ui:define>
 </ui:composition>
